@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/alex_brush</item>
+        <item>@font/alfa_slab_one</item>
+        <item>@font/anton</item>
+        <item>@font/arizonia</item>
+        <item>@font/astloch_bold</item>
+        <item>@font/audiowide</item>
+        <item>@font/bad_script</item>
+        <item>@font/baloo_bhai</item>
+        <item>@font/bebas_neue</item>
+        <item>@font/bungee</item>
+        <item>@font/caveat_bold</item>
+        <item>@font/cedarville_cursive</item>
+        <item>@font/courgette</item>
+        <item>@font/days_one</item>
+        <item>@font/dr_sugiyama</item>
+        <item>@font/homemade_apple</item>
+        <item>@font/vibur</item>
+        <item>@font/yesteryear</item>
+    </array>
+</resources>

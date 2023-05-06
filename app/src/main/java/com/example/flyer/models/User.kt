@@ -1,0 +1,58 @@
+package com.example.flyer.models
+
+import android.os.Parcel
+import android.os.Parcelable
+
+data class User(
+    var id: String?="",
+    var name: String?="",
+    var email: String?="",
+    var password: String?="",
+    var phone: String?="",
+    var image: String?="",
+    var fcmtoken: String?="",
+    var online_status: String? = "",
+    var last_seen: String? = "",
+    var text_status: String? = ""
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(name)
+        parcel.writeString(email)
+        parcel.writeString(password)
+        parcel.writeString(phone)
+        parcel.writeString(image)
+        parcel.writeString(fcmtoken)
+        parcel.writeString(online_status)
+        parcel.writeString(last_seen)
+        parcel.writeString(text_status)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<User> {
+        override fun createFromParcel(parcel: Parcel): User {
+            return User(parcel)
+        }
+
+        override fun newArray(size: Int): Array<User?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

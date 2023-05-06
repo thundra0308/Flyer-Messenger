@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "156299479088",
+    "project_id": "flyer-599d0",
+    "storage_bucket": "flyer-599d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156299479088:android:99df6b87694254c733c5f5",
+        "android_client_info": {
+          "package_name": "com.example.flyer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156299479088-goqi5q7f268hqmiphhajbn37c0vvtugb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flyer",
+            "certificate_hash": "466feed22af942d434e104214d21154660324f88"
+          }
+        },
+        {
+          "client_id": "156299479088-l91357r69fvgacq2fhhe766u2n608l6o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAti6tsb2Vfb1a8rCniXfNq66HqSnL3J6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156299479088-l91357r69fvgacq2fhhe766u2n608l6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="theme_color">#FFFFFF</color>
+    <color name="app_name_color">#D0CFFF</color>
+
+<!--    Splash Screen-->
+    <color name="splashscreen_bgc">#6765c8</color>
+    <color name="splashscreen_tc">#FFFFFF</color>
+
+<!--    Main Screen-->
+    <color name="mainscreen_bgc">#eeeefd</color>
+    <color name="mainscreen_icon_color">#BD99FF</color>
+    <color name="mainscreen_header_tc">#6765c8</color>
+    <color name="statusbar_tc">#000000</color>
+    <color name="mainscreen_chat_board_bg">#FFFFFF</color>
+    <color name="mainscreen_chat_board_tc">#474747</color>
+
+<!--    Chat Screen-->
+    <color name="chatactivity_color_bg">#FFFFFF</color>
+    <color name="chatscreen_header_color">#6765c8</color>
+    <color name="chatscreen_icon_color">#6765c8</color>
+    <color name="chatscreen_receiver_bubble_bg">#ECE8FF</color>
+    <color name="chatscreen_sender_bubble_bg">#eef0fd</color>
+    <color name="chatscreen_receiver_tc">#a89ad1</color>
+    <color name="chatscreen_sender_tc">#918db1</color>
+    <color name="chatscreen_typingbox_bg">#eeeefd</color>
+    <color name="schatscreen_color_online">#4FFF3B</color>
+    <color name="schatscreen_color_offline">#FF3B3B</color>
+    <color name="schatscreen_color_bg">#FFFFFF</color>
+
+<!--    Introscreen Colors-->
+    <color name="intro_login_sheet_bgc">#6765c8</color>
+    <color name="intro_login_sheet_bar_color">#9B9ACB</color>
+    <color name="intro_login_sheet_text_color">#FFFFFF</color>
+    <color name="intro_login_sheet_btn_color">#FFA2E2</color>
+
+<!--    Setting Frag Color-->
+    <color name="settingfrag_bg_color">#000000</color>
+    <color name="settingfrag_board_color">#6765c8</color>
+    <color name="settingfrag_text_color">#FFFFFF</color>
+
+<!--    AccountDetail Frag Color-->
+    <color name="accountdetail_bg1">#eeeefd</color>
+    <color name="accountdetail_bg2">#6765c8</color>
+    <color name="accountdetail_tc">#eeeefd</color>
+
+</resources>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/mainscreen_bgc"
+    tools:context=".ui.setting.SettingsFragment">
+
+    <TextView
+        android:id="@+id/settingscreen_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/mainscreen_header_tc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/settingscreen_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintTop_toBottomOf="@id/settingscreen_tv_title">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/settingscreen_cv_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#65649C"
+            android:elevation="0dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="10dp"
+            android:layout_gravity="center">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/settingscreen_iv_profile"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp"
+                    android:src="@drawable/profile_placeholder_icon"/>
+
+                <TextView
+                    android:id="@+id/settingscreen_tv_profilename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="Loid Forger"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/settingfrag_text_color"
+                    app:layout_constraintBottom_toTopOf="@id/settingscreen_tv_profileemail"
+                    app:layout_constraintStart_toEndOf="@id/settingscreen_iv_profile"
+                    app:layout_constraintTop_toTopOf="@id/settingscreen_iv_profile"
+                    />
+
+                <TextView
+                    android:id="@+id/settingscreen_tv_profileemail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="user@gmai.com"
+                    android:textColor="@color/settingfrag_text_color"
+                    app:layout_constraintBottom_toTopOf="@id/settingscreen_tv_profilephone"
+                    app:layout_constraintStart_toStartOf="@id/settingscreen_tv_profilename"
+                    app:layout_constraintTop_toBottomOf="@id/settingscreen_tv_profilename"/>
+
+                <TextView
+                    android:id="@+id/settingscreen_tv_profilephone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="000-000-000-0"
+                    android:textColor="@color/settingfrag_text_color"
+                    app:layout_constraintBottom_toBottomOf="@id/settingscreen_iv_profile"
+                    app:layout_constraintStart_toStartOf="@id/settingscreen_tv_profilename"
+                    app:layout_constraintTop_toBottomOf="@id/settingscreen_tv_profileemail"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/setting_screen_cv_accountdetailicon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:cardCornerRadius="7dp"
+                    app:cardBackgroundColor="#444365"
+                    app:cardElevation="-7dp"
+                    app:layout_constraintTop_toTopOf="@id/settingscreen_tv_profilename"
+                    app:layout_constraintBottom_toBottomOf="@id/settingscreen_tv_profilephone"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        android:layout_gravity="center"
+                        app:lottie_rawRes="@raw/ic_setting_anim"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/settingscreen_cv_profile"
+                android:layout_marginTop="7dp"
+                android:weightSum="4"
+                android:gravity="center">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/settingscreen_cv_account"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="3.5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="2dp"
+                    android:layout_marginStart="3.5dp"
+                    app:cardBackgroundColor="@color/settingfrag_board_color"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:layout_height="match_parent">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="3dp"
+                            app:lottie_rawRes="@raw/ic_profile_anim"
+                            app:lottie_autoPlay="true"
+                            android:paddingBottom="2dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="9dp"
+                            app:lottie_loop="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="Account"
+                            android:textSize="14sp"
+                            android:textColor="@color/settingfrag_text_color"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/settingscreen_cv_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="3.5dp"
+                    android:layout_marginEnd="3.5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/settingfrag_board_color"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:layout_height="match_parent">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:lottie_rawRes="@raw/ic_privacy_lottie"
+                            app:lottie_autoPlay="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="0dp"
+                            app:lottie_loop="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="Account"
+                            android:textSize="14sp"
+                            android:textColor="@color/settingfrag_text_color"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="3.5dp"
+                    android:layout_marginEnd="3.5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/settingfrag_board_color"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:layout_height="match_parent">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:lottie_rawRes="@raw/ic_theme_anim"
+                            app:lottie_autoPlay="true"
+                            android:paddingBottom="4dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:lottie_loop="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="Theme"
+                            android:textSize="14sp"
+                            android:textColor="@color/settingfrag_text_color"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginStart="3.5dp"
+                    android:layout_marginEnd="3.5dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/settingfrag_board_color"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:lottie_rawRes="@raw/ic_fetures_anim"
+                            app:lottie_autoPlay="true"
+                            android:paddingBottom="4dp"
+                            android:layout_marginBottom="7dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:lottie_loop="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="Tweeks"
+                            android:textSize="14sp"
+                            android:textColor="@color/settingfrag_text_color"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_logout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="5dp"
+        android:elevation="5dp"
+        app:cardBackgroundColor="#65649C"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_shutdown_1"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

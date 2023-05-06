@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/chatactivity_color_bg"
+    tools:context=".activity.ChatActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chatscreen_cl_headertop"
+        android:layout_width="match_parent"
+        android:background="@color/chatscreen_header_color"
+        android:layout_height="65dp">
+    
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/chatscreen_iv_back"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="18dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_back_white"
+        app:tint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chatscreen_iv_profile"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:scaleType="centerCrop"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        android:src="@drawable/ic_placeholder_1"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/chatscreen_iv_back"
+        app:layout_constraintTop_toTopOf="@id/chatscreen_iv_back"
+        app:layout_constraintBottom_toBottomOf="@id/chatscreen_iv_back"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/chatscreen_cv_status"
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            app:cardBackgroundColor="@color/schatscreen_color_online"
+            app:cardElevation="0dp"
+            android:elevation="0dp"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="@id/chatscreen_iv_profile"
+            app:layout_constraintBottom_toBottomOf="@id/chatscreen_iv_profile"/>
+
+    <TextView
+        android:id="@+id/chatscreen_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yor Forger"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/chatscreen_iv_profile"
+        app:layout_constraintTop_toTopOf="@id/chatscreen_iv_profile"
+        app:layout_constraintBottom_toBottomOf="@id/chatscreen_iv_profile"/>
+
+        <TextView
+            android:id="@+id/chatscreen_tv_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Idle"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/chatscreen_tv_name"
+            app:layout_constraintTop_toBottomOf="@id/chatscreen_tv_name"
+            app:layout_constraintBottom_toBottomOf="@id/chatscreen_iv_profile"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/chatscreen_iv_dots"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="18dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_menu_dot"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chatscreen_cl_content"
+            android:layout_below="@id/chatscreen_cl_headertop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatscreen_rv_chat"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                app:stackFromEnd="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/chatscreen_ll_bottom"/>
+
+            <LinearLayout
+                android:id="@+id/chatscreen_ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:weightSum="6">
+
+            <EditText
+                android:id="@+id/chatsreen_et_writemessage"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/background_chat_input"
+                android:hint="Type Your Message"
+                android:imeOptions="actionDone"
+                android:layout_weight="6"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:textSize="16sp"
+                android:padding="15dp"
+                android:textColor="@color/chatscreen_icon_color"
+                android:textColorHint="@color/chatscreen_icon_color"/>
+
+                <FrameLayout
+                    android:id="@+id/chatscreen_btn_more"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1.5"
+                    android:layout_marginEnd="3dp"
+                    android:background="@drawable/background_chat_input"
+                    app:layout_constraintStart_toEndOf="@+id/chatsreen_et_writemessage"
+                    app:layout_constraintEnd_toStartOf="@id/chatscreen_btn_send"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_clip"
+                        app:tint="@color/chatscreen_icon_color"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/chatscreen_btn_send"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1.5"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/background_chat_input"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="12dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_send"
+                        app:tint="@color/chatscreen_icon_color"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

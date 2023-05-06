@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/splash_layout"
+    android:transitionName="splash_background"
+    android:background="@color/splashscreen_bgc"
+    tools:context=".activity.SplashActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splash_lottie_icon"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:transitionName="splash_logo"
+        app:lottie_rawRes="@raw/splash_icon_2"
+        app:lottie_loop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="170dp"
+        app:lottie_autoPlay="true"/>
+
+    <TextView
+        android:id="@+id/splash_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="FLYER"
+        android:transitionName="splash_title"
+        android:textColor="@color/splashscreen_tc"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/splash_lottie_icon"
+        app:layout_constraintStart_toStartOf="@id/splash_lottie_icon"
+        app:layout_constraintEnd_toEndOf="@id/splash_lottie_icon"
+        android:textSize="70sp"/>
+
+    <TextView
+        android:id="@+id/splash_tv_slogan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:transitionName="splash_slogan"
+        android:gravity="center"
+        android:text="Let Your Words Fly, with Nations Largest Messenger Application"
+        android:textColor="@color/splashscreen_tc"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/splash_tv_title"
+        app:layout_constraintStart_toStartOf="@id/splash_tv_title"
+        app:layout_constraintEnd_toEndOf="@id/splash_tv_title"
+        android:textSize="16sp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:progressTint="#eeeefd"
+        android:backgroundTint="@color/splashscreen_tc"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/splash_tv_dev"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/splash_tv_dev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Developed By\n Esoteric Engineer"
+        android:textColor="@color/splashscreen_tc"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

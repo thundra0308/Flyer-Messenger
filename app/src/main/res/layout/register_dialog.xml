@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="35dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#9B9ACB"
+        android:background="@drawable/yes_btn"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the Required Details to Make your Words Fly"
+        android:textSize="16sp"
+        android:textColor="#E4E4E4"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="35dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_name"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Name"
+            app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
+            android:textColorHint="@color/intro_login_sheet_text_color"
+            app:hintTextColor="@color/intro_login_sheet_text_color"
+            app:boxStrokeColor="@color/theme_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_name"
+                android:layout_width="match_parent"
+                android:inputType="text"
+                android:textColor="@color/intro_login_sheet_text_color"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_email"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Email/Username"
+            android:layout_marginTop="5dp"
+            app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
+            android:textColorHint="@color/intro_login_sheet_text_color"
+            app:hintTextColor="@color/intro_login_sheet_text_color"
+            android:layout_below="@id/register_name"
+            app:boxStrokeColor="@color/theme_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_email"
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/intro_login_sheet_text_color"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Phone Number"
+            android:layout_marginTop="5dp"
+            app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
+            android:textColorHint="@color/intro_login_sheet_text_color"
+            app:hintTextColor="@color/intro_login_sheet_text_color"
+            android:layout_below="@id/register_email"
+            app:boxStrokeColor="@color/theme_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_phone"
+                android:layout_width="match_parent"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="@color/intro_login_sheet_text_color"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Password"
+            android:layout_marginTop="5dp"
+            app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
+            android:textColorHint="@color/intro_login_sheet_text_color"
+            app:hintTextColor="@color/intro_login_sheet_text_color"
+            android:layout_below="@+id/register_phone"
+            app:boxStrokeColor="@color/theme_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_pass"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:textColor="@color/intro_login_sheet_text_color"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_confirmapassword"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Confirm Password"
+            android:layout_marginTop="5dp"
+            app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
+            android:textColorHint="@color/intro_login_sheet_text_color"
+            app:hintTextColor="@color/intro_login_sheet_text_color"
+            android:layout_below="@+id/register_password"
+            app:boxStrokeColor="@color/theme_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_et_confpass"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:textColor="@color/intro_login_sheet_text_color"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_marginTop="35dp"
+            android:layout_height="60dp"
+            android:text="Register"
+            android:textSize="14sp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:textStyle="bold|italic"
+            app:cornerRadius="7dp"
+            android:elevation="0dp"
+            app:elevation="0dp"
+            android:backgroundTint="@color/intro_login_sheet_btn_color"
+            android:layout_below="@id/register_confirmapassword"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

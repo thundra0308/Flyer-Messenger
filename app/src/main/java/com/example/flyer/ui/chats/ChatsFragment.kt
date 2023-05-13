@@ -62,9 +62,11 @@ class ChatsFragment : Fragment() {
                         override fun onItemClick(position: Int) {
                             val senderId = state.data[position].sender_id
                             val receiverId = state.data[position].receiver_id
+                            val chat_room_id = state.data[position].id
                             val intent = Intent(context, ChatActivity::class.java)
                             intent.putExtra(Constants.KEY_SENDER_ID,senderId)
                             intent.putExtra(Constants.KEY_RECEIVER_ID,receiverId)
+                            intent.putExtra(Constants.KEY_CHAT_ROOM_ID,chat_room_id)
                             startActivity(intent)
                         }
                     })

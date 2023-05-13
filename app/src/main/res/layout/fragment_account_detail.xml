@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainscreen_bgc"
-    tools:context=".activity.AccountDetailActivity">
+    tools:context=".ui.accountdetails.AccountDetailFragment">
 
-    <TextView
+    <View
         android:id="@+id/accountdetail_tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Account Details"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/mainscreen_header_tc"
+        android:layout_width="35dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#9B9ACB"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="25dp"/>
+        android:background="@drawable/yes_btn"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/accountsetail_iv_profile"
@@ -88,6 +88,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/accountdetail_nsv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fadingEdge="horizontal"
@@ -216,7 +217,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accountdetail_nsv"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintVertical_bias="1"
         app:cardBackgroundColor="@color/intro_login_sheet_btn_color"
         android:layout_gravity="center">
 

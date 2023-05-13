@@ -47,4 +47,16 @@
     <style name="Modaladdcontact" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/addcontact_bottomsheet</item>
     </style>
+    <style name="bottomSheetStyle_longpressdelchat" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Modal_longpresschatdel</item>
+    </style>
+    <style name="Modal_longpresschatdel" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/longpress_chat_bottomsheet</item>
+    </style>
+    <style name="bottomSheetStyle_accountdetail" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Modal_accountdetail</item>
+    </style>
+    <style name="Modal_accountdetail" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/accountdetail_bottomsheet</item>
+    </style>
 </resources>

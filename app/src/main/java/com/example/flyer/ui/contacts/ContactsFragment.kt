@@ -94,9 +94,11 @@ class ContactsFragment : Fragment() {
                         override fun onItemClick(position: Int) {
                             val senderId = state.data[position].sender_id
                             val receiverId = state.data[position].receiver_id
+                            val chat_room_id = state.data[position].id
                             val intent = Intent(context, ChatActivity::class.java)
                             intent.putExtra(Constants.KEY_SENDER_ID,senderId)
                             intent.putExtra(Constants.KEY_RECEIVER_ID,receiverId)
+                            intent.putExtra(Constants.KEY_CHAT_ROOM_ID,chat_room_id)
                             startActivity(intent)
                         }
                     })
@@ -125,11 +127,12 @@ class ContactsFragment : Fragment() {
                     if(it1.isEmpty) {
                         database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",receiver?.id).whereEqualTo("receiver_id",senderid).get().addOnSuccessListener { it2 ->
                             if(it2.isEmpty) {
-                                val chatRoom: ChatRooms = ChatRooms(receiver?.id,receiver?.name,receiver?.image,"","", "",Timestamp(Date()),Timestamp(Date()),0,sender.id,sender.name,sender.image,"",0)
+                                val chatRoom: ChatRooms = ChatRooms("",receiver?.id,receiver?.name,receiver?.image,"","", "",Timestamp(Date()),Timestamp(Date()),0,sender.id,sender.name,sender.image,"",0)
                                 database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).add(chatRoom).addOnSuccessListener { it3 ->
                                     val hashmap: HashMap<String,Any> = HashMap()
                                     hashmap["timestamp"] = FieldValue.serverTimestamp()
                                     hashmap["date_added"] = FieldValue.serverTimestamp()
+                                    hashmap["id"] = it3.id
                                     it3.update(hashmap)
                                     Toast.makeText(context,"Contact Added Successfully",Toast.LENGTH_SHORT).show()
                                 }

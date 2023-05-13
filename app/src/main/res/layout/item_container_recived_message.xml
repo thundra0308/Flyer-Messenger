@@ -5,6 +5,7 @@
     android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingStart="20dp"
+    android:id="@+id/cl_receive"
     android:paddingEnd="20dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
@@ -15,25 +16,97 @@
         android:layout_height="30dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/received_tv_text"/>
+        app:layout_constraintBottom_toBottomOf="@id/received_ll_reply"/>
+
+    <LinearLayout
+        android:id="@+id/received_ll_reply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/background_recived_message"
+        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintStart_toEndOf="@id/receivec_iv_profile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.75"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/receiver_reply_cv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:cardCornerRadius="8dp"
+            android:visibility="visible"
+            android:layout_gravity="start"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="@color/schatscreen_color_bg"
+            android:elevation="0dp"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/received_reply_bar"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/mainscreen_icon_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/received_reply_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainscreen_icon_color"
+                    android:text="Natsu Dragneel"
+                    android:ellipsize="end"
+                    android:paddingEnd="7dp"
+                    android:maxLines="1"
+                    app:layout_constraintStart_toEndOf="@id/received_reply_bar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="7dp"/>
+
+                <TextView
+                    android:id="@+id/received_reply_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:paddingEnd="7dp"
+                    android:maxLines="1"
+                    android:textColor="@color/del_msg_textcolor"
+                    android:text="Hey You"
+                    app:layout_constraintStart_toStartOf="@id/received_reply_name"
+                    app:layout_constraintTop_toBottomOf="@id/received_reply_name"
+                    android:layout_marginTop="4dp"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/received_tv_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/background_recived_message"
-        android:paddingStart="18dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="18dp"
-        android:paddingBottom="15dp"
-        app:layout_constraintWidth_max="wrap"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="9dp"
         android:textColor="@color/chatscreen_receiver_tc"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/receivec_iv_profile"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.75"/>
-    
+        />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/received_tv_datetime"
         android:layout_width="0dp"
@@ -41,7 +114,7 @@
         android:layout_marginTop="8dp"
         android:textColor="#9F9F9F"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/received_tv_text"
-        app:layout_constraintTop_toBottomOf="@id/received_tv_text"/>
+        app:layout_constraintStart_toStartOf="@id/received_ll_reply"
+        app:layout_constraintTop_toBottomOf="@id/received_ll_reply"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,14 +18,26 @@
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mainscreen_menu_top"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_menu_08"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@color/mainscreen_icon_color"/>
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/mainscreen_iv_profile_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            app:civ_border_color="#65649C"
+            app:civ_border_color="@color/app_name_color"
             app:civ_border_width="1.5dp"
             android:src="@drawable/profile_placeholder_icon"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -40,8 +52,9 @@
             android:textColor="@color/app_name_color"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@id/mainscreen_menu_top"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

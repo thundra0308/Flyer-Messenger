@@ -6,6 +6,7 @@ object Constants {
     const val KEY_COLLECTION_CHAT: String = "chat"
     const val KEY_SENDER_ID: String = "sender_id"
     const val KEY_RECEIVER_ID: String = "receiver_id"
+    const val KEY_CHAT_ROOM_ID: String = "chat_room_id"
     const val KEY_CHAT_ID: String = "chat_id"
     const val KEY_NAME: String = "name"
     const val KEY_EMAIL: String = "email"

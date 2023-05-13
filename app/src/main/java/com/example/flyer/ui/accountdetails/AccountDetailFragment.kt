@@ -1,27 +1,36 @@
-package com.example.flyer.activity
+package com.example.flyer.ui.accountdetails
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.flyer.R
-import com.example.flyer.databinding.ActivityAccountDetailBinding
+import com.example.flyer.databinding.FragmentAccountDetailBinding
+import com.example.flyer.databinding.FragmentChatsBinding
 import com.example.flyer.models.User
 import com.example.flyer.screenstate.ScreenState
+import com.example.flyer.ui.chats.ChatsViewModel
 import com.example.flyer.utils.Constants
-import com.example.flyer.viewmodels.AccountDetailViewModel
+import com.example.flyer.viewmodelfactory.AccountDetailViewModelFactory
+import com.example.flyer.viewmodelfactory.ChatsViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -33,22 +42,45 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import java.io.IOException
 
-class AccountDetailActivity : AppCompatActivity() {
+class AccountDetailFragment : BottomSheetDialogFragment() {
 
-    private lateinit var binding: ActivityAccountDetailBinding
+    private var _binding: FragmentAccountDetailBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var database: FirebaseFirestore
     private var saveImageToInternalStorage: Uri? = null
     private var mProfileImageUrl: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAccountDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        val viewModel: AccountDetailViewModel = ViewModelProvider(this).get(AccountDetailViewModel::class.java)
-        viewModel.userLiveData.observe(this, Observer { state ->
-            setUpUi(state)
-            setUpListeners()
-        })
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return BottomSheetDialog(requireContext(), R.style.bottomSheetStyle_accountdetail)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentAccountDetailBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        val viewModel: AccountDetailViewModel = ViewModelProvider(this, AccountDetailViewModelFactory("",""))[AccountDetailViewModel::class.java]
+        viewModel.userLiveData.observe(viewLifecycleOwner) {
+            setUpUi(it)
+        }
+        setUpListeners()
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Expand the bottom sheet
+        dialog?.setOnShowListener {
+            val bottomSheetDialog = it as BottomSheetDialog
+            val bottomSheetInternal = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            BottomSheetBehavior.from(bottomSheetInternal!!).apply {
+                peekHeight = ViewGroup.LayoutParams.MATCH_PARENT
+                isHideable = true
+                state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
+
+        // Perform any necessary setup or UI customization here
     }
 
     private fun setUpListeners() {
@@ -87,9 +119,9 @@ class AccountDetailActivity : AppCompatActivity() {
         userHashMap["text_status"] = binding.accountdetailEtThoughts.text.toString()
         database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_USER).document(FirebaseAuth.getInstance().uid!!).update(userHashMap).addOnSuccessListener {
-            Toast.makeText(this@AccountDetailActivity,"Profile Updated Successfully",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Profile Updated Successfully", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
-            Toast.makeText(this@AccountDetailActivity,"Failed to Update the Data",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Failed to Update the Data", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -101,7 +133,7 @@ class AccountDetailActivity : AppCompatActivity() {
                     val contentURI = data.data
                     try {
                         @Suppress("DEPRECATION")
-                        val selectedImageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
+                        val selectedImageBitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, contentURI)
                         saveImageToInternalStorage = data.data
                         try {
                             Glide
@@ -115,7 +147,7 @@ class AccountDetailActivity : AppCompatActivity() {
                         }
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Failed!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -138,13 +170,14 @@ class AccountDetailActivity : AppCompatActivity() {
                 }
             }.addOnFailureListener {
                     exception ->
-                Toast.makeText(this@AccountDetailActivity,exception.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),exception.message.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun choosePhotoFromGallery() {
-        Dexter.withActivity(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(object : MultiplePermissionsListener {
+        Dexter.withActivity(requireActivity()).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).withListener(object :
+            MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 if (report!!.areAllPermissionsGranted()) {
                     val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -158,12 +191,12 @@ class AccountDetailActivity : AppCompatActivity() {
     }
 
     fun showRationalDialog(title: String, message: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title).setMessage(message).setPositiveButton("Go To Settings"){
                 _, _->
             try {
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                val uri = Uri.fromParts("package",packageName,null)
+                val uri = Uri.fromParts("package",requireContext().packageName,null)
                 intent.data = uri
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
@@ -177,12 +210,7 @@ class AccountDetailActivity : AppCompatActivity() {
     }
 
     private fun getFileExtension(uri: Uri): String? {
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri))
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(requireContext().contentResolver.getType(uri))
     }
 
     companion object{

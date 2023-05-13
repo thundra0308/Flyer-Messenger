@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.flyer.activity.MainActivity
 import com.example.flyer.R
-import com.example.flyer.activity.AccountDetailActivity
 import com.example.flyer.activity.IntroActivity
 import com.example.flyer.databinding.FragmentSettingsBinding
 import com.example.flyer.models.User
 import com.example.flyer.screenstate.ScreenState
+import com.example.flyer.ui.accountdetails.AccountDetailFragment
 import com.example.flyer.utils.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 
@@ -47,11 +47,13 @@ class SettingsFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             signOut()
         }
-        binding.settingscreenCvAccount.setOnClickListener {
-            startActivity(Intent(activity,AccountDetailActivity::class.java))
-        }
         binding.settingScreenCvAccountdetailicon.setOnClickListener {
-            startActivity(Intent(activity,AccountDetailActivity::class.java))
+            val bottomSheetFragment = AccountDetailFragment()
+            bottomSheetFragment.show(requireActivity().supportFragmentManager, "bottomSheetTag")
+        }
+        binding.settingscreenCvAccount.setOnClickListener {
+            val bottomSheetFragment = AccountDetailFragment()
+            bottomSheetFragment.show(requireActivity().supportFragmentManager, "bottomSheetTag")
         }
     }
 

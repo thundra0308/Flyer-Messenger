@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.flyer.R
 import com.example.flyer.databinding.ActivityMainBinding
 import com.example.flyer.models.User
+import com.example.flyer.ui.accountdetails.AccountDetailFragment
 import com.example.flyer.utils.Constants
 import com.example.flyer.utils.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         setUpBottomNavigation()
         setUpUi()
         FirebaseMessaging.getInstance().token.addOnSuccessListener(this::updateToken)
+        binding.mainscreenIvProfileIcon.setOnClickListener {
+            val bottomSheetFragment = AccountDetailFragment()
+            bottomSheetFragment.show(this@MainActivity.supportFragmentManager, "bottomSheetTag")
+        }
     }
 
     private fun updateToken(token: String) {

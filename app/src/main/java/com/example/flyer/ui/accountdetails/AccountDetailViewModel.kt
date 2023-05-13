@@ -1,4 +1,4 @@
-package com.example.flyer.viewmodels
+package com.example.flyer.ui.accountdetails
 
 import android.content.ContentValues
 import android.util.Log
@@ -11,7 +11,7 @@ import com.example.flyer.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class AccountDetailViewModel: ViewModel() {
+class AccountDetailViewModel(private val senderid: String, private val receiverid: String) : ViewModel() {
     private var usersLiveData: MutableLiveData<ScreenState<User?>> = MutableLiveData()
     val userLiveData: LiveData<ScreenState<User?>>
         get() = usersLiveData
@@ -30,5 +30,4 @@ class AccountDetailViewModel: ViewModel() {
             Log.e(ContentValues.TAG, "Error Getting the User Details", exception)
         }
     }
-
 }

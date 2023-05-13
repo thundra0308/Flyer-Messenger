@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChatViewModel(private val senderid: String, private val receiverid: String): ViewModel() {
+class ChatViewModel(private val senderid: String, private val receiverid: String, private var chat_room_id: String): ViewModel() {
     private lateinit var database: FirebaseFirestore
     private var chatsLiveData: MutableLiveData<ScreenState<List<Chat>?>> = MutableLiveData()
     val chatLiveData: LiveData<ScreenState<List<Chat>?>>
@@ -40,6 +40,12 @@ class ChatViewModel(private val senderid: String, private val receiverid: String
                             val chats = mutableListOf<Chat>()
                             for(document in docs1!!) {
                                 val chat = document.toObject(Chat::class.java)
+                                if(chat.del_for=="Me") {
+                                    if(chat.del_by?.contains(senderid)!!) chat.text = "This Message has been Deleted."
+                                } else if(chat.del_for=="Everyone"){
+                                    chat.text = "This Message has been Deleted."
+                                }
+                                chat.id = document.id
                                 if(chat.status=="Delivered") {
                                     document.reference.update("status","Read")
                                 }
@@ -55,6 +61,12 @@ class ChatViewModel(private val senderid: String, private val receiverid: String
                     val chats = mutableListOf<Chat>()
                     for(document in docs2!!) {
                         val chat = document.toObject(Chat::class.java)
+                        if(chat.del_for=="Me") {
+                            if(chat.del_by?.contains(senderid)!!) chat.text = "This Message has been Deleted."
+                        } else if(chat.del_for=="Everyone"){
+                            chat.text = "This Message has been Deleted."
+                        }
+                        chat.id = document.id
                         if(chat.status=="Delivered") {
                             document.reference.update("status","Read")
                         }

@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FieldValue
 import java.util.*
 
 data class ChatRooms(
+    var id: String? = "",
     var receiver_id: String? = "",
     var receiver_name: String? = "",
     var receiver_image: String? = "",

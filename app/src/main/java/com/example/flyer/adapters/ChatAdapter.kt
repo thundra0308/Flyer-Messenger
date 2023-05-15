@@ -19,7 +19,7 @@ import com.example.flyer.models.Chat
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ChatAdapter(private val context: Context, private var chatList :List<Chat>, private var image: String): RecyclerView.Adapter<ChatAdapter.MainViewHolder>() {
+class ChatAdapter(private val context: Context, private var chatList :List<Chat>, private var image: String, private var receiverName: String, private val delSetSender: HashMap<String,Chat>, private val delSetReceiver: HashMap<String,Chat>, private val recyclerView: RecyclerView): RecyclerView.Adapter<ChatAdapter.MainViewHolder>() {
     private lateinit var mListener: OnItemLongClickListener
     private lateinit var click_Listener: OnItemClickListener
     inner class MainViewHolder(private val itemView: View, private val listener: OnItemLongClickListener): RecyclerView.ViewHolder(itemView) {
@@ -33,7 +33,29 @@ class ChatAdapter(private val context: Context, private var chatList :List<Chat>
             }
         }
         fun bindDataSent(chat: Chat) {
-            if(chat.is_selected) {
+            val cvSent = itemView.findViewById<CardView>(R.id.sent_reply_cv)
+            cvSent.setOnClickListener {
+                recyclerView.smoothScrollToPosition(chat.reply_pos.toInt())
+            }
+            val barSent = itemView.findViewById<View>(R.id.sent_reply_bar)
+            val nameSent = itemView.findViewById<TextView>(R.id.sent_reply_name)
+            val msgSent = itemView.findViewById<TextView>(R.id.sent_reply_msg)
+            if(chat.reply_attached && chat.del_for=="") {
+                cvSent.visibility = View.VISIBLE
+                msgSent.text = chat.reply_text
+                if(chat.reply_to==FirebaseAuth.getInstance().uid) {
+                    barSent.setBackgroundColor(ContextCompat.getColor(context,R.color.reply_sender_color))
+                    nameSent.setTextColor(ContextCompat.getColor(context,R.color.reply_sender_color))
+                    nameSent.text = "You"
+                } else {
+                    barSent.setBackgroundColor(ContextCompat.getColor(context,R.color.reply_receiver_color))
+                    nameSent.setTextColor(ContextCompat.getColor(context,R.color.reply_receiver_color))
+                    nameSent.text = receiverName
+                }
+            } else {
+                cvSent.visibility = View.GONE
+            }
+            if(delSetSender.contains(chat.id)) {
                 itemView.findViewById<LinearLayout>(R.id.sent_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_sentforeground)
             } else {
                 itemView.findViewById<LinearLayout>(R.id.sent_ll_reply).foreground = null
@@ -48,7 +70,29 @@ class ChatAdapter(private val context: Context, private var chatList :List<Chat>
             }
         }
         fun bindDataReceive(chat: Chat) {
-            if(chat.is_selected) {
+            val cvSent = itemView.findViewById<CardView>(R.id.receiver_reply_cv)
+            cvSent.setOnClickListener {
+                recyclerView.smoothScrollToPosition(chat.reply_pos.toInt())
+            }
+            val barSent = itemView.findViewById<View>(R.id.received_reply_bar)
+            val nameSent = itemView.findViewById<TextView>(R.id.received_reply_name)
+            val msgSent = itemView.findViewById<TextView>(R.id.received_reply_msg)
+            if(chat.reply_attached && chat.del_for=="") {
+                cvSent.visibility = View.VISIBLE
+                msgSent.text = chat.reply_text
+                if(chat.reply_to==FirebaseAuth.getInstance().uid) {
+                    barSent.setBackgroundColor(ContextCompat.getColor(context,R.color.reply_sender_color))
+                    nameSent.setTextColor(ContextCompat.getColor(context,R.color.reply_sender_color))
+                    nameSent.text = "You"
+                } else {
+                    barSent.setBackgroundColor(ContextCompat.getColor(context,R.color.reply_receiver_color))
+                    nameSent.setTextColor(ContextCompat.getColor(context,R.color.reply_receiver_color))
+                    nameSent.text = receiverName
+                }
+            } else {
+                cvSent.visibility = View.GONE
+            }
+            if(delSetReceiver.contains(chat.id)) {
                 itemView.findViewById<LinearLayout>(R.id.received_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_receiveforeground)
             } else {
                 itemView.findViewById<LinearLayout>(R.id.received_ll_reply).foreground = null

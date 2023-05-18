@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import me.ibrahimsn.lib.SmoothBottomBar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferenceManager: PreferenceManager
@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateToken(token: String) {
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN,token)
         val database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_USER).document(FirebaseAuth.getInstance().uid!!).update("fcmtoken",token).addOnSuccessListener {
             Log.d("TOKEN UPDATE STATUS", "Token Updated Successfully")
@@ -52,12 +53,14 @@ class MainActivity : AppCompatActivity() {
     private fun setUpUi() {
         FirebaseFirestore.getInstance().collection(Constants.KEY_COLLECTION_USER).document(FirebaseAuth.getInstance().uid!!).addSnapshotListener { value, error ->
             val user = value?.toObject(User::class.java)
-            Glide
-                .with(this)
-                .load(user?.image)
-                .centerCrop()
-                .placeholder(R.drawable.profile_icon_placeholder_1)
-                .into(binding.mainscreenIvProfileIcon)
+            if(!isFinishing) {
+                Glide
+                    .with(this)
+                    .load(user?.image)
+                    .centerCrop()
+                    .placeholder(R.drawable.profile_icon_placeholder_1)
+                    .into(binding.mainscreenIvProfileIcon)
+            }
 
         }
     }
@@ -76,4 +79,5 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
+
 }

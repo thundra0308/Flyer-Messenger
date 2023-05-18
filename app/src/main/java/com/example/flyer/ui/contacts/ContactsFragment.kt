@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flyer.R
+import com.example.flyer.activity.BaseFragments
 import com.example.flyer.activity.ChatActivity
 import com.example.flyer.adapters.ContactsAdapter
 import com.example.flyer.databinding.FragmentContactsBinding
@@ -31,9 +32,10 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.Instant
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class ContactsFragment : Fragment() {
+class ContactsFragment : BaseFragments() {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
@@ -127,7 +129,7 @@ class ContactsFragment : Fragment() {
                     if(it1.isEmpty) {
                         database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",receiver?.id).whereEqualTo("receiver_id",senderid).get().addOnSuccessListener { it2 ->
                             if(it2.isEmpty) {
-                                val chatRoom: ChatRooms = ChatRooms("",receiver?.id,receiver?.name,receiver?.image,"","", "",Timestamp(Date()),Timestamp(Date()),0,sender.id,sender.name,sender.image,"",0)
+                                val chatRoom: ChatRooms = ChatRooms("",receiver?.id,receiver?.name,receiver?.image,"",receiver?.text_status,"", "",Timestamp(Date()),Timestamp(Date()),0,sender.id,sender.name,sender.image,"",sender.text_status,0, ArrayList(),"")
                                 database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).add(chatRoom).addOnSuccessListener { it3 ->
                                     val hashmap: HashMap<String,Any> = HashMap()
                                     hashmap["timestamp"] = FieldValue.serverTimestamp()

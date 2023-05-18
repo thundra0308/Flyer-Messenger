@@ -37,6 +37,7 @@ class ContactsAdapter(private val context: Context, private val user: List<ChatR
                     .placeholder(R.drawable.profile_icon_placeholder_1)
                     .into(profile)
                 name.text = receiver.sender_name
+                text_status.text = receiver.sender_thoughts
                 if(receiver.date_added!=null) {
                     val t1 = receiver.date_added?.toDate()
                     val t2 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(t1!!)
@@ -50,6 +51,7 @@ class ContactsAdapter(private val context: Context, private val user: List<ChatR
                     .placeholder(R.drawable.profile_icon_placeholder_1)
                     .into(profile)
                 name.text = receiver.receiver_name
+                text_status.text = receiver.receiver_thoughts
                 if(receiver.date_added!=null) {
                     val t1 = receiver.date_added?.toDate()
                     val t2 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(t1!!)

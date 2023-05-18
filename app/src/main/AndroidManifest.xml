@@ -20,17 +20,17 @@
         android:theme="@style/Theme.Flyer"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ChatActivity"
-            android:theme="@style/Theme.Flyer.Chat"
-            android:exported="false">
+            android:name=".activity.BaseActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.AccountDetailActivity"
+            android:name=".activity.ChatActivity"
             android:exported="false"
-            android:theme="@style/Theme.Flyer.AccountDetail">
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/Theme.Flyer.Chat">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -42,6 +42,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="false"
+            android:parentActivityName=".activity.SplashActivity"
             android:theme="@style/Theme.Flyer.MainScreen" />
         <activity
             android:name=".activity.SplashActivity"
@@ -57,7 +58,7 @@
             android:name=".firebase.MessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 

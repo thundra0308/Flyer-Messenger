@@ -10,15 +10,17 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.flyer.activity.MainActivity
 import com.example.flyer.R
+import com.example.flyer.activity.BaseFragments
 import com.example.flyer.activity.IntroActivity
 import com.example.flyer.databinding.FragmentSettingsBinding
 import com.example.flyer.models.User
 import com.example.flyer.screenstate.ScreenState
 import com.example.flyer.ui.accountdetails.AccountDetailFragment
+import com.example.flyer.ui.themesetting.ThemeSettingFragment
 import com.example.flyer.utils.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : BaseFragments() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
@@ -53,6 +55,10 @@ class SettingsFragment : Fragment() {
         }
         binding.settingscreenCvAccount.setOnClickListener {
             val bottomSheetFragment = AccountDetailFragment()
+            bottomSheetFragment.show(requireActivity().supportFragmentManager, "bottomSheetTag")
+        }
+        binding.settingscreenCvSettingtheme.setOnClickListener {
+            val bottomSheetFragment = ThemeSettingFragment()
             bottomSheetFragment.show(requireActivity().supportFragmentManager, "bottomSheetTag")
         }
     }

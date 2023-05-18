@@ -7,7 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="theme_color">#FFFFFF</color>
+    <color name="theme_color">#000000</color>
+    <color name="theme_color_alt">#FFFFFF</color>
     <color name="app_name_color">#6765c8</color>
 
 <!--    Splash Screen-->
@@ -24,14 +25,15 @@
     <color name="del_msg_textcolor">#8C8C8C</color>
 
 <!--    Chat Screen-->
-    <color name="chatactivity_color_bg">#FFFFFF</color>
-    <color name="chatscreen_header_color">#6765c8</color>
-    <color name="chatscreen_icon_color">#FFFFFF</color>
-    <color name="chatscreen_receiver_bubble_bg">#EEEBFF</color>
-    <color name="chatscreen_sender_bubble_bg">#eeeefd</color>
-    <color name="chatscreen_receiver_tc">#a89ad1</color>
-    <color name="chatscreen_sender_tc">#918db1</color>
-    <color name="chatscreen_typingbox_bg">#6765c8</color>
+    <color name="chatactivity_color_bg">#eeeefd</color>
+    <color name="chatscreen_header_color">#eeeefd</color>
+    <color name="chatscreen_icon_color">#6765c8</color>
+    <color name="chatscreen_receiver_bubble_bg">#6765c8</color>
+    <color name="chatscreen_sender_bubble_bg">#FF83A6</color>
+    <color name="chatscreen_receiver_tc">#FFFFFF</color>
+    <color name="chatscreen_sender_tc">#FFFFFF</color>
+    <color name="chatscreen_typingbox_bg">#FFFFFF</color>
+    <color name="chatscreen_typingbox_tc">#000000</color>
     <color name="schatscreen_color_online">#4FFF3B</color>
     <color name="schatscreen_color_offline">#FF3B3B</color>
     <color name="schatscreen_color_bg">#FFFFFF</color>
@@ -40,7 +42,7 @@
     <color name="chat_del_tv_bottomsheet">#686868</color>
     <color name="chat_del_Yes_bottomsheet">#FF3737</color>
     <color name="chat_del_No_bottomsheet">#8BC34A</color>
-    <color name="reply_sender_color">#FF83A6</color>
+    <color name="reply_sender_color">#FF9CB8</color>
     <color name="reply_receiver_color">#BD99FF</color>
 
 <!--    Introscreen Colors-->
@@ -58,5 +60,8 @@
     <color name="accountdetail_bg1">#eeeefd</color>
     <color name="accountdetail_bg2">#6765c8</color>
     <color name="accountdetail_tc">#eeeefd</color>
+
+    <color name="settingtheme_bottomsheet_bg">#eeeefd</color>
+    <color name="settingtheme_card_bg">#FFFFFF</color>
 
 </resources>

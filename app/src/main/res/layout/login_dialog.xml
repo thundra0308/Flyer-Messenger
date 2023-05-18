@@ -41,7 +41,7 @@
         app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
         android:textColorHint="@color/intro_login_sheet_text_color"
         app:hintTextColor="@color/intro_login_sheet_text_color"
-        app:boxStrokeColor="@color/theme_color"
+        app:boxStrokeColor="@color/white"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -64,7 +64,7 @@
             android:textColorHint="@color/intro_login_sheet_text_color"
             app:hintTextColor="@color/intro_login_sheet_text_color"
             android:layout_below="@+id/login_email"
-            app:boxStrokeColor="@color/theme_color"
+            app:boxStrokeColor="@color/white"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
 
             <com.google.android.material.textfield.TextInputEditText

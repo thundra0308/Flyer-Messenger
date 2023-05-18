@@ -42,7 +42,11 @@ class ChatsAdapter(private val context: Context, private val user: List<ChatRoom
                     .placeholder(R.drawable.profile_icon_placeholder_1)
                     .into(profile)
                 name.text = receiver.sender_name
-                text.text = receiver.last_text
+                if(receiver.last_msg_del_status?.contains(FirebaseAuth.getInstance().uid!!)!!) {
+                    text.text = "This Message has been Deleted !"
+                } else {
+                    text.text = receiver.last_text
+                }
                 if(receiver.last_text_from != sender_id) {
                     tick.visibility = View.GONE
                     msgcount.visibility = View.VISIBLE
@@ -65,7 +69,11 @@ class ChatsAdapter(private val context: Context, private val user: List<ChatRoom
                     .placeholder(R.drawable.profile_icon_placeholder_1)
                     .into(profile)
                 name.text = receiver.receiver_name
-                text.text = receiver.last_text
+                if(receiver.last_msg_del_status?.contains(FirebaseAuth.getInstance().uid!!)!!) {
+                    text.text = "This Message has been Deleted !"
+                } else {
+                    text.text = receiver.last_text
+                }
                 if(receiver.last_text_from != sender_id) {
                     tick.visibility = View.GONE
                     msgcount.visibility = View.VISIBLE

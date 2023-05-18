@@ -4,6 +4,6 @@
     >
     <corners android:topRightRadius="12dp"
         android:topLeftRadius="12dp"/>
-    <solid android:color="@color/chat_del_bottomsheet"/>
+    <solid android:color="@color/settingtheme_bottomsheet_bg"/>
 
 </shape>

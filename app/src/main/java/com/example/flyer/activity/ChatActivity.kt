@@ -1,7 +1,6 @@
 package com.example.flyer.activity
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,22 +20,23 @@ import com.example.flyer.adapters.ChatAdapter
 import com.example.flyer.databinding.ActivityChatBinding
 import com.example.flyer.models.Chat
 import com.example.flyer.models.ChatRooms
+import com.example.flyer.models.User
 import com.example.flyer.screenstate.ScreenState
 import com.example.flyer.utils.Constants
 import com.example.flyer.viewmodelfactory.ChatViewModelFactory
 import com.example.flyer.viewmodels.ChatViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import org.w3c.dom.Text
+import org.json.JSONArray
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : BaseActivity() {
 
     private lateinit var binding: ActivityChatBinding
+    private lateinit var viewModel: ChatViewModel
     private lateinit var database: FirebaseFirestore
     private lateinit var chatRoomId: String
     private lateinit var userId: String
@@ -47,6 +47,8 @@ class ChatActivity : AppCompatActivity() {
     private var delSetSender: HashMap<String,Chat> = HashMap()
     private var delSetReceiver: HashMap<String,Chat> = HashMap()
     private var replyPos: Long = 0
+    private lateinit var senderDetails: User
+    private lateinit var receiverDetails: User
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +66,15 @@ class ChatActivity : AppCompatActivity() {
             senderId = id2
             receiverId = id1
         }
+        viewModel = ViewModelProvider(this, ChatViewModelFactory(senderId,receiverId,chatRoomId))[ChatViewModel::class.java]
         updateUnreadCount()
-        val viewModel: ChatViewModel = ViewModelProvider(this, ChatViewModelFactory(senderId,receiverId,chatRoomId))[ChatViewModel::class.java]
+        viewModel.senderDetailLiveData.observe(this, Observer { state ->
+            senderDetails = state.data!!
+        })
+        viewModel.receiverDetailLiveData.observe(this, Observer { state ->
+            receiverDetails = state.data!!
+            processReceiverAvailabilityStatus()
+        })
         viewModel.receiverLiveData.observe(this, Observer { state ->
             processReceiverDetails(state)
         })
@@ -85,6 +94,24 @@ class ChatActivity : AppCompatActivity() {
             delSetSender = HashMap()
             delSetReceiver = HashMap()
             binding.replyCv.visibility = View.GONE
+            if(!receiverDetails.online_status!!) {
+                try {
+                    val tokens: JSONArray = JSONArray()
+                    tokens.put(receiverDetails.fcmtoken)
+                    val data: JSONObject = JSONObject()
+                    data.put(Constants.KEY_USER_ID,userId)
+                    data.put(Constants.KEY_CHAT_ROOM_ID,chatRoomId)
+                    data.put(Constants.KEY_NAME,senderDetails.name)
+                    data.put(Constants.KEY_FCM_TOKEN,senderDetails.fcmtoken)
+                    data.put(Constants.KEY_MESSAGE,binding.chatsreenEtWritemessage.text.toString())
+                    val body: JSONObject = JSONObject()
+                    body.put(Constants.REMOTE_MSG_DATA,data)
+                    body.put(Constants.REMOTE_MSG_REGISTRATION_IDS,tokens)
+                    viewModel.sendNotification(body.toString())
+                } catch (e: Exception) {
+                    showToast(e.message!!)
+                }
+            }
             binding.chatsreenEtWritemessage.setText("")
         }
         binding.chatscreenIvBack.setOnClickListener {
@@ -94,46 +121,22 @@ class ChatActivity : AppCompatActivity() {
             showDeleteDialog()
         }
         binding.chatscreenIvReply.setOnClickListener {
-            binding.replyCv.visibility = View.VISIBLE
-            var id: String = ""
-            if(delSetSender.size==1) {
-                id = delSetSender.keys.first()
-                binding.replyBar.setBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_sender_color))
-                binding.replyName.setTextColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_sender_color))
-                binding.replyMsg.text = delSetSender[id]?.text?.toString()
-                binding.replyName.text = "You"
-                replyPos = delSetSender[id]?.timestamp!!
-            } else if(delSetReceiver.size==1) {
-                id = delSetReceiver.keys.first()
-                binding.replyBar.setBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_receiver_color))
-                binding.replyName.setTextColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_receiver_color))
-                binding.replyMsg.text = delSetReceiver[id]?.text
-                binding.replyName.text = binding.chatscreenTvName.text
-                replyPos = delSetReceiver[id]?.timestamp!!
-            }
-            delSetSender = HashMap()
-            delSetReceiver = HashMap()
-            showHeaderDefault()
-            adapter.notifyDataSetChanged()
+            reply()
         }
         binding.replyCancel.setOnClickListener {
-            binding.replyCv.visibility = View.GONE
-            delSetReceiver = HashMap()
-            delSetSender = HashMap()
-            Log.e("_cancel_size_1","${delSetReceiver.size} , ${delSetSender.size}")
-            adapter.notifyDataSetChanged()
+            replyCancel()
         }
     }
 
     private fun updateUnreadCount() {
-        database = FirebaseFirestore.getInstance()
-        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).get().addOnSuccessListener {
-            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).get().addOnSuccessListener {
-                val doc = it.toObject(ChatRooms::class.java)
-                if(doc?.last_text_from == receiverId) {
-                    database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(it.id).update("unread_count",0)
-                }
-            }
+        viewModel.updateReadCount()
+    }
+
+    private fun processReceiverAvailabilityStatus() {
+        if(receiverDetails.online_status==true) {
+            binding.chatscreenCvStatus.setCardBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.schatscreen_color_online))
+        } else {
+            binding.chatscreenCvStatus.setCardBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.schatscreen_color_offline))
         }
     }
 
@@ -144,32 +147,14 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                database = FirebaseFirestore.getInstance()
-                database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",senderId).whereEqualTo("receiver_id",receiverId).get().addOnSuccessListener { it1 ->
-                    if(it1.isEmpty) {
-                        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",receiverId).whereEqualTo("receiver_id",senderId).get().addOnSuccessListener { it2 ->
-                            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(it2.documents[0].id).update("receiver_activity","Typing...")
-                        }
-                    } else {
-                        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(it1.documents[0].id).update("sender_activity","Typing...")
-                    }
-                }
+                viewModel.updateTypingStatus("Typing...")
             }
 
             override fun afterTextChanged(p0: Editable?) {
                 binding.chatsreenEtWritemessage.post {
                     binding.chatsreenEtWritemessage.height = binding.chatsreenEtWritemessage.lineHeight * binding.chatsreenEtWritemessage.lineCount
                 }
-                database = FirebaseFirestore.getInstance()
-                database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",senderId).whereEqualTo("receiver_id",receiverId).get().addOnSuccessListener { it1 ->
-                    if(it1.isEmpty) {
-                        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",receiverId).whereEqualTo("receiver_id",senderId).get().addOnSuccessListener { it2 ->
-                            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(it2.documents[0].id).update("receiver_activity","")
-                        }
-                    } else {
-                        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(it1.documents[0].id).update("sender_activity","")
-                    }
-                }
+                viewModel.updateTypingStatus("")
             }
 
         })
@@ -292,16 +277,8 @@ class ChatActivity : AppCompatActivity() {
             replyBy = userId
             replyText = binding.replyMsg.text.toString()
         }
-        database = FirebaseFirestore.getInstance()
-        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).get().addOnSuccessListener {
-            val room: ChatRooms = it.toObject(ChatRooms::class.java)!!
-            unread_count = room.unread_count + 1
-            message_number = room.message_number + 1
-            val chat = Chat("",senderId,text,dt,message_number,"text","Sent", false,"",ArrayList(),replyAttached,replyTo,replyBy,replyPos,replyText)
-            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).collection(Constants.KEY_COLLECTION_CHAT).add(chat).addOnSuccessListener {
-                database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).update("last_text",text,"message_number",message_number,"timestamp",FieldValue.serverTimestamp(),"last_text_from",senderId,"unread_count",unread_count)
-            }
-        }
+        val chat = Chat("",senderId,text,dt,message_number,"text","Sent", false,"",ArrayList(),replyAttached,replyTo,replyBy,replyPos,replyText)
+        viewModel.sendMessage(chat)
     }
 
     private fun showDeleteDialog() {
@@ -345,7 +322,7 @@ class ChatActivity : AppCompatActivity() {
             yes?.setOnClickListener {
                 database = FirebaseFirestore.getInstance()
                 for(id in delSetSender.keys) {
-                    database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).collection(Constants.KEY_COLLECTION_CHAT).document(id).update("del_for",flag)
+                    viewModel.deleteMessage(id,flag)
                 }
                 delSetSender = HashMap()
                 showHeaderDefault()
@@ -364,25 +341,11 @@ class ChatActivity : AppCompatActivity() {
             yes?.setOnClickListener {
                 database = FirebaseFirestore.getInstance()
                 for(id in delSetSender.keys) {
-                    database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).collection(Constants.KEY_COLLECTION_CHAT).document(id).get().addOnSuccessListener {
-                        val chat = it.toObject(Chat::class.java)
-                        val  map: HashMap<String,Any> = HashMap()
-                        chat?.del_by?.add(userId)
-                        map["del_for"] = flag
-                        map["del_by"] = chat?.del_by!!
-                        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).collection(Constants.KEY_COLLECTION_CHAT).document(id).update(map)
-                    }
+                    viewModel.deleteMessage(id,flag)
                 }
                 delSetSender = HashMap()
                 for(id in delSetReceiver.keys) {
-                    database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).collection(Constants.KEY_COLLECTION_CHAT).document(id).get().addOnSuccessListener {
-                        val chat = it.toObject(Chat::class.java)
-                        val  map: HashMap<String,Any> = HashMap()
-                        chat?.del_by?.add(userId)
-                        map["del_for"] = flag
-                        map["del_by"] = chat?.del_by!!
-                        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chatRoomId).collection(Constants.KEY_COLLECTION_CHAT).document(id).update(map)
-                    }
+                    viewModel.deleteMessage(id,flag)
                 }
                 delSetReceiver = HashMap()
                 showHeaderDefault()
@@ -392,6 +355,38 @@ class ChatActivity : AppCompatActivity() {
         no?.setOnClickListener {
             bottomSheet.dismiss()
         }
+    }
+
+    private fun reply() {
+        binding.replyCv.visibility = View.VISIBLE
+        var id: String = ""
+        if(delSetSender.size==1) {
+            id = delSetSender.keys.first()
+            binding.replyBar.setBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_sender_color))
+            binding.replyName.setTextColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_sender_color))
+            binding.replyMsg.text = delSetSender[id]?.text?.toString()
+            binding.replyName.text = "You"
+            replyPos = delSetSender[id]?.timestamp!!
+        } else if(delSetReceiver.size==1) {
+            id = delSetReceiver.keys.first()
+            binding.replyBar.setBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_receiver_color))
+            binding.replyName.setTextColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_receiver_color))
+            binding.replyMsg.text = delSetReceiver[id]?.text
+            binding.replyName.text = binding.chatscreenTvName.text
+            replyPos = delSetReceiver[id]?.timestamp!!
+        }
+        delSetSender = HashMap()
+        delSetReceiver = HashMap()
+        showHeaderDefault()
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun replyCancel() {
+        binding.replyCv.visibility = View.GONE
+        delSetReceiver = HashMap()
+        delSetSender = HashMap()
+        Log.e("_cancel_size_1","${delSetReceiver.size} , ${delSetSender.size}")
+        adapter.notifyDataSetChanged()
     }
 
     private fun showHeaderDefault() {
@@ -416,6 +411,14 @@ class ChatActivity : AppCompatActivity() {
         binding.chatscreenIvDel.visibility = View.VISIBLE
         binding.chatscreenIvForward.visibility = View.VISIBLE
         binding.chatscreenIvVerticaldots.visibility = View.VISIBLE
+    }
+
+    private fun sendNotification(message: String) {
+
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this@ChatActivity,message,Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -72,7 +72,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginTop="7dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:boxBackgroundColor="@color/mainscreen_bgc"
+        app:boxBackgroundColor="@color/settingtheme_bottomsheet_bg"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accountsetail_iv_profile"
@@ -83,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="16sp"
+            android:textColor="@color/theme_color"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +108,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                app:boxBackgroundColor="@color/mainscreen_bgc"
+                app:boxBackgroundColor="@color/settingtheme_bottomsheet_bg"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:hint="Name">
@@ -117,6 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="16sp"
+                    android:textColor="@color/theme_color"
                     android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -132,7 +134,7 @@
                 android:focusable="false"
                 android:layout_marginTop="7dp"
                 android:hint="Email"
-                app:boxBackgroundColor="@color/mainscreen_bgc"
+                app:boxBackgroundColor="@color/settingtheme_bottomsheet_bg"
                 app:hintTextColor="#1F74BA">
 
                 <EditText
@@ -140,6 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:focusable="false"
+                    android:textColor="@color/theme_color"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -159,7 +162,7 @@
                     android:layout_height="55dp"
                     android:focusable="false"
                     android:hint="Chose Your Date of Birth"
-                    app:boxBackgroundColor="@color/mainscreen_bgc"
+                    app:boxBackgroundColor="@color/settingtheme_bottomsheet_bg"
                     app:hintTextColor="#1F74BA">
 
                     <EditText
@@ -167,6 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:focusable="false"
+                        android:textColor="@color/theme_color"
                         android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -192,7 +196,7 @@
                 android:layout_marginEnd="25dp"
                 android:layout_marginTop="7dp"
                 android:hint="Phone Number"
-                app:boxBackgroundColor="@color/mainscreen_bgc"
+                app:boxBackgroundColor="@color/settingtheme_bottomsheet_bg"
                 app:hintTextColor="#1F74BA">
 
                 <EditText
@@ -200,6 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:focusable="false"
+                    android:textColor="@color/theme_color"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>

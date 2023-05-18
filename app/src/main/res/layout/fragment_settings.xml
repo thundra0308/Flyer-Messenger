@@ -221,6 +221,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/settingscreen_cv_settingtheme"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_marginStart="3.5dp"

@@ -119,6 +119,16 @@ class AccountDetailFragment : BottomSheetDialogFragment() {
         userHashMap["text_status"] = binding.accountdetailEtThoughts.text.toString()
         database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_USER).document(FirebaseAuth.getInstance().uid!!).update(userHashMap).addOnSuccessListener {
+            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",FirebaseAuth.getInstance().uid!!).get().addOnSuccessListener {
+                for(doc in it.documents) {
+                    database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(doc.id).update("sender_name",userHashMap["name"],"sender_image",userHashMap["image"],"sender_thoughts",userHashMap["text_status"])
+                }
+            }
+            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("receiver_id",FirebaseAuth.getInstance().uid!!).get().addOnSuccessListener {
+                for(doc in it.documents) {
+                    database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(doc.id).update("receiver_name",userHashMap["name"],"receiver_image",userHashMap["image"],"receiver_thoughts",userHashMap["text_status"])
+                }
+            }
             Toast.makeText(requireContext(),"Profile Updated Successfully", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(requireContext(),"Failed to Update the Data", Toast.LENGTH_SHORT).show()

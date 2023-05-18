@@ -11,7 +11,7 @@ data class User(
     var phone: String?="",
     var image: String?="",
     var fcmtoken: String?="",
-    var online_status: String? = "",
+    var online_status: Boolean? = false,
     var last_seen: String? = "",
     var text_status: String? = ""
 ): Parcelable {
@@ -23,7 +23,7 @@ data class User(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readString(),
         parcel.readString()
     ) {
@@ -37,7 +37,7 @@ data class User(
         parcel.writeString(phone)
         parcel.writeString(image)
         parcel.writeString(fcmtoken)
-        parcel.writeString(online_status)
+        parcel.writeValue(online_status)
         parcel.writeString(last_seen)
         parcel.writeString(text_status)
     }

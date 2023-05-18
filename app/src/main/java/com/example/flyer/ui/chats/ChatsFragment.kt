@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flyer.R
+import com.example.flyer.activity.BaseFragments
 import com.example.flyer.activity.ChatActivity
 import com.example.flyer.adapters.ChatsAdapter
 import com.example.flyer.adapters.ContactsAdapter
@@ -25,7 +26,7 @@ import com.example.flyer.viewmodelfactory.ContactViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ChatsFragment : Fragment() {
+class ChatsFragment : BaseFragments() {
 
     private var _binding: FragmentChatsBinding? = null
     private val binding get() = _binding!!

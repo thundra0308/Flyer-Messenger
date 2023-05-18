@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import java.util.*
+import kotlin.collections.ArrayList
 
 data class ChatRooms(
     var id: String? = "",
@@ -12,6 +13,7 @@ data class ChatRooms(
     var receiver_name: String? = "",
     var receiver_image: String? = "",
     var receiver_activity: String? = "",
+    var receiver_thoughts: String? = "",
     var last_text: String? = "",
     var last_text_from: String? = "",
     var timestamp: Timestamp? = Timestamp(Date()),
@@ -21,5 +23,8 @@ data class ChatRooms(
     var sender_name: String? = "",
     var sender_image: String? = "",
     var sender_activity: String? = "",
-    var unread_count: Long = 0
+    var sender_thoughts: String? = "",
+    var unread_count: Long = 0,
+    var last_msg_del_status: ArrayList<String>? = ArrayList(),
+    var last_msg_id: String? = ""
 )

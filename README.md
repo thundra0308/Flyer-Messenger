@@ -5,7 +5,6 @@ Flyer is a Messenger Application for Android with Easy Chatting, Sharing of Docu
 <br>
 
 ### 🌟STAR THIS REPOSITORY TO SUPPORT
-![Screenshot_2023-05-20-12-35-35-02_e3c582cd988ce7ff5a2ded24ea57f1ae]()
 
 <br>
 

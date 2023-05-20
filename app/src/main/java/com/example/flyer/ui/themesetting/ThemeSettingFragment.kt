@@ -10,6 +10,7 @@ import com.example.flyer.R
 import com.example.flyer.databinding.FragmentAccountDetailBinding
 import com.example.flyer.databinding.FragmentThemeSettingBinding
 import com.example.flyer.ui.accountdetails.AccountDetailViewModel
+import com.example.flyer.ui.settingchatwallpaper.SettingChatWallpaperFragment
 import com.example.flyer.viewmodelfactory.AccountDetailViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -45,12 +46,10 @@ class ThemeSettingFragment : BottomSheetDialogFragment() {
     }
 
     private fun setListeners() {
-        binding.themesettingScLightdark.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+        binding.settingthemeClWallpaper.setOnClickListener {
+            val bottomSheetFragment = SettingChatWallpaperFragment()
+            bottomSheetFragment.show(requireActivity().supportFragmentManager, "bottomSheetTag")
+            dialog?.dismiss()
         }
     }
 

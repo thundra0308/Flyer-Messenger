@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Flyer"
 include ':app'
+include ':sample'
+include ':imagepicker'

@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "156299479088",
-    "project_id": "flyer-599d0",
-    "storage_bucket": "flyer-599d0.appspot.com"
+    "project_number": "483624454675",
+    "project_id": "flyer-alternate",
+    "storage_bucket": "flyer-alternate.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:156299479088:android:99df6b87694254c733c5f5",
+        "mobilesdk_app_id": "1:483624454675:android:ec2d848427dc0668a94de6",
         "android_client_info": {
           "package_name": "com.example.flyer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "156299479088-goqi5q7f268hqmiphhajbn37c0vvtugb.apps.googleusercontent.com",
+          "client_id": "483624454675-hu0nl7e5c4v9k8t1td73r51acl3mflnf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.flyer",
-            "certificate_hash": "466feed22af942d434e104214d21154660324f88"
+            "certificate_hash": "557b29604c6d2300fa71d94020e81ef7bcdc9b7d"
           }
         },
         {
-          "client_id": "156299479088-l91357r69fvgacq2fhhe766u2n608l6o.apps.googleusercontent.com",
+          "client_id": "483624454675-148eec5gveqm7takl53a34oh49e1ttdt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAti6tsb2Vfb1a8rCniXfNq66HqSnL3J6w"
+          "current_key": "AIzaSyCwKRzWW63psCqZVTlk2Jh-rElG7A7pJ0c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "156299479088-l91357r69fvgacq2fhhe766u2n608l6o.apps.googleusercontent.com",
+              "client_id": "483624454675-148eec5gveqm7takl53a34oh49e1ttdt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

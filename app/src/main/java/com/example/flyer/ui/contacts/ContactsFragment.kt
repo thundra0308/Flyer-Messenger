@@ -129,7 +129,7 @@ class ContactsFragment : BaseFragments() {
                     if(it1.isEmpty) {
                         database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).whereEqualTo("sender_id",receiver?.id).whereEqualTo("receiver_id",senderid).get().addOnSuccessListener { it2 ->
                             if(it2.isEmpty) {
-                                val chatRoom: ChatRooms = ChatRooms("",receiver?.id,receiver?.name,receiver?.image,"",receiver?.text_status,"", "",Timestamp(Date()),Timestamp(Date()),0,sender.id,sender.name,sender.image,"",sender.text_status,0, ArrayList(),"")
+                                val chatRoom: ChatRooms = ChatRooms("",receiver?.id,receiver?.name,receiver?.image,"",receiver?.text_status,"", "",Timestamp(Date()),Timestamp(Date()),0,sender.id,sender.name,sender.image,"",sender.text_status,0, ArrayList(),"",sender.global_chat_wallpaper,receiver?.global_chat_wallpaper)
                                 database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).add(chatRoom).addOnSuccessListener { it3 ->
                                     val hashmap: HashMap<String,Any> = HashMap()
                                     hashmap["timestamp"] = FieldValue.serverTimestamp()

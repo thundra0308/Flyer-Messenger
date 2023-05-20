@@ -1,5 +1,6 @@
 package com.example.flyer.activity
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +16,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.flyer.R
 import com.example.flyer.adapters.ChatAdapter
 import com.example.flyer.databinding.ActivityChatBinding
@@ -77,6 +80,9 @@ class ChatActivity : BaseActivity() {
         })
         viewModel.receiverLiveData.observe(this, Observer { state ->
             processReceiverDetails(state)
+        })
+        viewModel.wallpaperLiveData.observe(this , Observer { state ->
+            processWallpaper(state)
         })
         viewModel.chatLiveData.observe(this, Observer { state ->
             processChatList(state)
@@ -158,6 +164,27 @@ class ChatActivity : BaseActivity() {
             }
 
         })
+    }
+
+    private fun processWallpaper(state: ScreenState<String?>) {
+        when(state) {
+            is ScreenState.Success -> {
+                Glide.with(this)
+                    .load(state.data)
+                    .centerCrop()
+                    .into(object : CustomTarget<Drawable>() {
+                        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                            binding.chatscreenRvChat.background = resource
+                        }
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            // Called when the image is no longer needed to be displayed
+                        }
+                    })
+            }
+            else -> {
+                //TODO
+            }
+        }
     }
 
     private fun processReceiverDetails(state: ScreenState<ChatRooms?>) {

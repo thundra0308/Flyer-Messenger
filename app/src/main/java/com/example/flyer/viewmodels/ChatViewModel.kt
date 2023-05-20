@@ -42,11 +42,16 @@ class ChatViewModel(private val sender_id: String, private val receiver_id: Stri
     val receiverDetailLiveData: LiveData<ScreenState<User?>>
         get() = receiverDetailsLiveData
 
+    private var wallpapersLiveData: MutableLiveData<ScreenState<String?>> = MutableLiveData()
+    val wallpaperLiveData: LiveData<ScreenState<String?>>
+        get() = wallpapersLiveData
+
     init {
         fetchSenderDetail()
         fetchReceiverDetail()
         fetchPreviousChats()
         fetchReceiverDetails()
+        fetchWallpaper()
     }
 
     private fun fetchPreviousChats() {
@@ -200,6 +205,20 @@ class ChatViewModel(private val sender_id: String, private val receiver_id: Stri
             val doc = it.toObject(ChatRooms::class.java)
             if(doc?.last_text_from == receiver_id) {
                 database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(it.id).update("unread_count",0)
+            }
+        }
+    }
+
+    private fun fetchWallpaper() {
+        database = FirebaseFirestore.getInstance()
+        database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chat_room_id).addSnapshotListener { value, error ->
+            if(value!=null) {
+                val room = value.toObject(ChatRooms::class.java)
+                if(sender_id==room?.sender_id) {
+                    wallpapersLiveData.postValue(ScreenState.Success(room.sender_local_chat_wallpaper))
+                } else {
+                    wallpapersLiveData.postValue(ScreenState.Success(room?.receiver_local_chat_wallpaper))
+                }
             }
         }
     }

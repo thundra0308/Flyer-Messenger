@@ -63,7 +63,7 @@ class IntroActivity : AppCompatActivity() {
                 val pass: String = bottomSheet.findViewById<TextInputEditText>(R.id.register_et_pass)?.text.toString()
                 val confpass: String = bottomSheet.findViewById<TextInputEditText>(R.id.register_et_confpass)?.text.toString()
                 if(isValidSignUpDetails(name,email,phone,pass,confpass)) {
-                    val user: User = User("",name,email,pass,phone,"","",false,"","")
+                    val user: User = User("",name,email,pass,phone,"","",false,"","","")
                     register(user)
                 }
                 bottomSheet.dismiss()

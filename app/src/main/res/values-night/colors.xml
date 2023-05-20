@@ -52,4 +52,8 @@
     <color name="settingtheme_bottomsheet_bg">#222222</color>
     <color name="settingtheme_card_bg">#000000</color>
 
+    <color name="ucrop_color_toolbar">#6765c8</color>
+    <color name="ucrop_color_statusbar">#6765c8</color>
+    <color name="ucrop_color_widget_active">#6765c8</color>
+
 </resources>

@@ -26,5 +26,7 @@ data class ChatRooms(
     var sender_thoughts: String? = "",
     var unread_count: Long = 0,
     var last_msg_del_status: ArrayList<String>? = ArrayList(),
-    var last_msg_id: String? = ""
+    var last_msg_id: String? = "",
+    var sender_local_chat_wallpaper: String? = "",
+    var receiver_local_chat_wallpaper: String? = ""
 )

@@ -13,7 +13,8 @@ data class User(
     var fcmtoken: String?="",
     var online_status: Boolean? = false,
     var last_seen: String? = "",
-    var text_status: String? = ""
+    var text_status: String? = "",
+    var global_chat_wallpaper: String? = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -24,6 +25,7 @@ data class User(
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readString(),
         parcel.readString(),
         parcel.readString()
     ) {
@@ -40,6 +42,7 @@ data class User(
         parcel.writeValue(online_status)
         parcel.writeString(last_seen)
         parcel.writeString(text_status)
+        parcel.writeString(global_chat_wallpaper)
     }
 
     override fun describeContents(): Int {

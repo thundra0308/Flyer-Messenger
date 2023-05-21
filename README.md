@@ -16,8 +16,8 @@ Flyer is a Messenger Application for Android with Easy Chatting, Sharing of Docu
 <img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/10fedb52-bc6b-4c65-a445-09b5f5335e4d?raw=true" style="width: 31%;margin:16px;" />&nbsp;&nbsp;
 <img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/efa2d00a-5d12-4cb0-8c49-5beeeb938ff7?raw=true" style="width: 31%;margin:16px;" />&nbsp;&nbsp;
 <img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/3b1f4713-f847-4238-83df-cedc1e3f9955?raw=true" style="width: 31%;margin:16px;" />&nbsp;&nbsp;
-<img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/860488a9-a41f-454c-823a-17f62bd3a4c0?raw=true" style="width: 31%;margin:16px;" />&nbsp;&nbsp;
-<img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/fcd6a1d7-3d0d-4930-9a6f-592d7cc98592?raw=true" style="width: 31%;margin:16px;" />
+<img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/357e2aa2-b38b-461e-9014-e41952d3839e?raw=true" style="width: 31%;margin:16px;" />&nbsp;&nbsp;
+<img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/3259c98f-9a9e-429f-bcf0-e3adc85cd81f?raw=true" style="width: 31%;margin:16px;" />
 <img src="https://github.com/thundra0308/Flyer-Messenger/assets/103625079/eb8277cb-8050-453c-8b8d-01f399c3f994?raw=true" style="width: 31%;margin:16px;" />
 
 <br>

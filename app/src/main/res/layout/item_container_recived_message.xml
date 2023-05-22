@@ -33,15 +33,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/receiver_reply_cv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             app:cardCornerRadius="8dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_gravity="start"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
-            app:cardBackgroundColor="@color/schatscreen_color_bg"
+            app:cardBackgroundColor="@color/chatactivity_color_bg"
             android:elevation="0dp"
             app:cardElevation="0dp">
 
@@ -95,26 +95,29 @@
 
     <TextView
         android:id="@+id/received_tv_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
         android:paddingTop="15dp"
         android:paddingEnd="18dp"
-        android:paddingBottom="15dp"
+        android:paddingBottom="10dp"
         android:textColor="@color/chatscreen_receiver_tc"
         android:textSize="16sp"
         />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/received_tv_datetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="05:30"
+            android:textStyle="bold"
+            android:gravity="end|center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="#E4E3FF"
+            android:textSize="12sp"/>
 
-    <TextView
-        android:id="@+id/received_tv_datetime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#9F9F9F"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@id/received_ll_reply"
-        app:layout_constraintTop_toBottomOf="@id/received_ll_reply"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

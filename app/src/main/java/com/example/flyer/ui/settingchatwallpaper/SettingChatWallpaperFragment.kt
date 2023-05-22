@@ -2,7 +2,9 @@ package com.example.flyer.ui.settingchatwallpaper
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.ContentResolver
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -37,6 +39,7 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
     private lateinit var viewModel: SettingChatWallpaperViewModel
     private var imageUri: Uri? = null
     private lateinit var croppedImageUri: Uri
+    private var flag: Int = 0
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -47,7 +50,10 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
         _binding = FragmentSettingChatWallpaperBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[SettingChatWallpaperViewModel::class.java]
         viewModel.wallpaperLiveData.observe(viewLifecycleOwner) { state ->
-            processWallpaperDetail(state)
+            if(flag==0) {
+                processWallpaperDetail(state)
+                showToast("Loaded")
+            }
         }
         setUpUi()
         setUpListeners()
@@ -69,6 +75,7 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1980)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start()
+
         }
         binding.settingchatwallpaperTvRemove.setOnClickListener {
             imageUri = null
@@ -79,6 +86,7 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
                 .into(binding.settingchatwallpaperIvWallpaper)
         }
         binding.settingchatwallpaperCvSet.setOnClickListener {
+            flag = 0
             if(imageUri!=null) {
                 val path: String = "USER_IMAGE"+System.currentTimeMillis()+"."+getFileExtension(imageUri!!)
                 viewModel.uploadWallpaper(imageUri!!,path)
@@ -104,6 +112,7 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
+            flag = 1
             imageUri = data?.data!!
             Glide
                 .with(requireContext())
@@ -111,8 +120,10 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
                 .centerCrop()
                 .into(binding.settingchatwallpaperIvWallpaper)
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            flag = 0
             Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
+            flag = 0
             Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
     }

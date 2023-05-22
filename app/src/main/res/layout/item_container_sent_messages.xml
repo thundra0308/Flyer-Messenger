@@ -24,15 +24,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/sent_reply_cv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             app:cardCornerRadius="8dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_gravity="end"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
-            app:cardBackgroundColor="@color/schatscreen_color_bg"
+            app:cardBackgroundColor="@color/chatactivity_color_bg"
             android:elevation="0dp"
             app:cardElevation="0dp">
 
@@ -86,25 +86,51 @@
 
     <TextView
         android:id="@+id/sent_tv_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
         android:paddingTop="15dp"
         android:paddingEnd="18dp"
-        android:paddingBottom="15dp"
+        android:paddingBottom="10dp"
         android:textColor="@color/chatscreen_sender_tc"
         android:textSize="16sp"/>
 
-    </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3.3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/sent_tv_time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="#9F9F9F"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sent_ll_reply"/>
+        <TextView
+            android:id="@+id/sent_tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="05:30"
+            android:textStyle="bold"
+            android:gravity="end|center"
+            android:textColor="#FFEBF0"
+            android:layout_marginEnd="7dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/sent_iv_tick"
+            android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/sent_iv_tick"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:tint="#FFEBF0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/sent_tv_time"
+                android:src="@drawable/ic_double_tick"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

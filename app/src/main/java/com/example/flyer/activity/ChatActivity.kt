@@ -1,5 +1,6 @@
 package com.example.flyer.activity
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -82,7 +84,9 @@ class ChatActivity : BaseActivity() {
             processReceiverDetails(state)
         })
         viewModel.wallpaperLiveData.observe(this , Observer { state ->
-            processWallpaper(state)
+            if(state.data!="") {
+                processWallpaper(state)
+            }
         })
         viewModel.chatLiveData.observe(this, Observer { state ->
             processChatList(state)
@@ -174,7 +178,7 @@ class ChatActivity : BaseActivity() {
                     .centerCrop()
                     .into(object : CustomTarget<Drawable>() {
                         override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                            binding.chatscreenRvChat.background = resource
+                            binding.chatactivityClMain.background = resource
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {
                             // Called when the image is no longer needed to be displayed
@@ -286,7 +290,7 @@ class ChatActivity : BaseActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun sendMessage() {
         val text: String = binding.chatsreenEtWritemessage.text.toString().trim()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -438,10 +442,6 @@ class ChatActivity : BaseActivity() {
         binding.chatscreenIvDel.visibility = View.VISIBLE
         binding.chatscreenIvForward.visibility = View.VISIBLE
         binding.chatscreenIvVerticaldots.visibility = View.VISIBLE
-    }
-
-    private fun sendNotification(message: String) {
-
     }
 
     private fun showToast(message: String) {

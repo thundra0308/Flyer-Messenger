@@ -51,7 +51,6 @@ class ContactsFragment : BaseFragments() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactsBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -67,7 +66,6 @@ class ContactsFragment : BaseFragments() {
         return root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setListeners() {
         binding.contactscreenCvAdd.setOnClickListener {
             val bottomSheet: BottomSheetDialog = BottomSheetDialog(requireContext(), R.style.bottomSheetStyleaddcontact)
@@ -117,7 +115,6 @@ class ContactsFragment : BaseFragments() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createChatRoom(contact: String) {
         database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_USER).whereEqualTo("phone",contact).get().addOnSuccessListener {

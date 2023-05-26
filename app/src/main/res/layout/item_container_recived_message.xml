@@ -98,9 +98,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
-        android:paddingTop="15dp"
+        android:paddingTop="18dp"
         android:paddingEnd="18dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="0dp"
         android:textColor="@color/chatscreen_receiver_tc"
         android:textSize="16sp"
         />
@@ -116,7 +116,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="#E4E3FF"
-            android:textSize="12sp"/>
+            android:textSize="11sp"/>
 
     </LinearLayout>
 

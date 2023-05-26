@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flyer.R
 import com.example.flyer.activity.BaseFragments
@@ -23,6 +25,7 @@ import com.example.flyer.ui.contacts.ContactsViewModel
 import com.example.flyer.utils.Constants
 import com.example.flyer.viewmodelfactory.ChatsViewModelFactory
 import com.example.flyer.viewmodelfactory.ContactViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -31,14 +34,16 @@ class ChatsFragment : BaseFragments() {
     private var _binding: FragmentChatsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModel: ChatsViewModel
     private lateinit var database: FirebaseFirestore
     private val senderid: String = FirebaseAuth.getInstance().uid!!
     private lateinit var sender: User
+    private var adapter: ChatsAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentChatsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val viewModel: ChatsViewModel = ViewModelProvider(this, ChatsViewModelFactory(senderid,""))[ChatsViewModel::class.java]
+        viewModel = ViewModelProvider(this, ChatsViewModelFactory(senderid,""))[ChatsViewModel::class.java]
         database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_USER).document(senderid).addSnapshotListener { value, error ->
             sender = value?.toObject(User::class.java)!!
@@ -46,7 +51,26 @@ class ChatsFragment : BaseFragments() {
         viewModel.chatLiveData.observe(viewLifecycleOwner) { state ->
             processChatList(state)
         }
+        setListeners()
         return root
+    }
+
+    private fun setListeners() {
+        binding.chatscreenCvOptiondel.setOnClickListener {
+            val bottomSheet: BottomSheetDialog = BottomSheetDialog(requireContext(), R.style.bottomSheetStyle_accountdetail)
+            bottomSheet.setContentView(R.layout.chatroomscreen_delete_dialog)
+            bottomSheet.show()
+            val btnNo = bottomSheet.findViewById<CardView>(R.id.chatroom_cv_delno)
+            val btnYes = bottomSheet.findViewById<CardView>(R.id.chatroom_cv_delyes)
+            btnNo?.setOnClickListener {
+                bottomSheet.dismiss()
+            }
+            btnYes?.setOnClickListener {
+                val documents = adapter?.getSelectedItems()
+                viewModel.deleteChatRooms(documents!!)
+                bottomSheet.dismiss()
+            }
+        }
     }
 
     private fun processChatList(state: ScreenState<List<ChatRooms>?>) {
@@ -58,24 +82,19 @@ class ChatsFragment : BaseFragments() {
 
                 if(state.data!=null) {
                     Log.e("Size of Contacts List", "${state.data.size}")
-                    val adapter = ChatsAdapter(requireContext(),state.data)
-                    adapter.setOnClickListener(object : ChatsAdapter.onItemClickListener{
-                        override fun onItemClick(position: Int) {
-                            val senderId = state.data[position].sender_id
-                            val receiverId = state.data[position].receiver_id
-                            val chat_room_id = state.data[position].id
-                            val intent = Intent(context, ChatActivity::class.java)
-                            intent.putExtra(Constants.KEY_SENDER_ID,senderId)
-                            intent.putExtra(Constants.KEY_RECEIVER_ID,receiverId)
-                            intent.putExtra(Constants.KEY_CHAT_ROOM_ID,chat_room_id)
-                            startActivity(intent)
-                        }
-                    })
+                    adapter = ChatsAdapter(requireContext(),state.data)
                     val rv = binding.chatscreenRvChats
                     rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
                     rv.setHasFixedSize(true)
                     rv.adapter = adapter
-                    adapter.notifyDataSetChanged()
+                    adapter?.selectionEnabledLiveData?.observe(viewLifecycleOwner) { state ->
+                        if(state==true) {
+                            binding.chatscreenCvOptionbar.visibility = View.VISIBLE
+                        } else {
+                            binding.chatscreenCvOptionbar.visibility = View.GONE
+                        }
+                    }
+                    adapter?.notifyDataSetChanged()
                 }
             }
             is ScreenState.Error -> {

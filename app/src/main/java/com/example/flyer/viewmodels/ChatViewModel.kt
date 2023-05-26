@@ -57,20 +57,30 @@ class ChatViewModel(private val sender_id: String, private val receiver_id: Stri
     private fun fetchPreviousChats() {
         database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chat_room_id).get().addOnSuccessListener { document1 ->
+            val room = document1.toObject(ChatRooms::class.java)
+            var lastMessageNumber: Long = 0
+            if(sender_id==room?.sender_id) {
+                lastMessageNumber = room.sender_last_message_number
+            } else {
+                lastMessageNumber = room?.receiver_last_message_number!!
+            }
             database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chat_room_id).collection(Constants.KEY_COLLECTION_CHAT).addSnapshotListener { docs1, error ->
                 val chats = mutableListOf<Chat>()
                 for(document in docs1!!) {
                     val chat = document.toObject(Chat::class.java)
-                    if(chat.del_for=="Me") {
-                        if(chat.del_by?.contains(sender_id)!!) chat.text = "This Message has been Deleted."
-                    } else if(chat.del_for=="Everyone"){
-                        chat.text = "This Message has been Deleted."
+                    if(chat.timestamp>lastMessageNumber) {
+                        if (chat.del_for == "Me") {
+                            if (chat.del_by?.contains(sender_id)!!) chat.text =
+                                "This Message has been Deleted."
+                        } else if (chat.del_for == "Everyone") {
+                            chat.text = "This Message has been Deleted."
+                        }
+                        chat.id = document.id
+                        if (chat.status == "Delivered") {
+                            document.reference.update("status", "Read")
+                        }
+                        chats.add(chat)
                     }
-                    chat.id = document.id
-                    if(chat.status=="Delivered") {
-                        document.reference.update("status","Read")
-                    }
-                    chats.add(chat)
                 }
                 val sortedChats = chats.sortedBy { it.timestamp }
                 chatsLiveData.postValue(ScreenState.Success(sortedChats))

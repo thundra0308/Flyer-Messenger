@@ -5,9 +5,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.flyer.models.Chat
 import com.example.flyer.models.ChatRooms
 import com.example.flyer.screenstate.ScreenState
 import com.example.flyer.utils.Constants
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -37,11 +39,29 @@ class ChatsViewModel(private val senderid: String, private val receiverid: Strin
                         val users = mutableListOf<ChatRooms>()
                         for (document in documents!!) {
                             val user = document.toObject(ChatRooms::class.java)
-                            if(user?.message_number!! > 0) users.add(user)
+                            if((senderid==user?.sender_id && user?.message_number!!>user?.sender_last_message_number!!) || (senderid==user?.receiver_id && user.message_number>user.receiver_last_message_number)) {
+                                users.add(user)
+                            }
                         }
                         chatsLiveData.postValue(ScreenState.Success(users))
                     }
                 }
+            }
+        }
+    }
+
+    fun deleteChatRooms(documents: List<String>) {
+        val database = FirebaseFirestore.getInstance()
+        for(id in documents) {
+            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(id).get().addOnSuccessListener {
+                val room = it.toObject(ChatRooms::class.java)
+                val map: HashMap<String,Any> = HashMap()
+                if(senderid==room?.sender_id) {
+                    map["sender_last_message_number"] = room.message_number
+                } else {
+                    map["receiver_last_message_number"] = room?.message_number!!
+                }
+                database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(id).update(map)
             }
         }
     }

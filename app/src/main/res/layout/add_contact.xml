@@ -1,86 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
-    android:paddingBottom="20dp"
     android:orientation="vertical">
 
     <View
+        android:id="@+id/addcontact_topbar"
         android:layout_width="35dp"
         android:layout_height="5dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
         android:backgroundTint="#9B9ACB"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/yes_btn"/>
 
     <TextView
+        android:id="@+id/addcontact_tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add New Contact"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:textColor="#E4E4E4"
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:textColor="@color/del_msg_textcolor"
         android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/addcontact_topbar"
+        app:layout_constraintStart_toStartOf="@id/addcontact_topbar"
+        app:layout_constraintEnd_toEndOf="@id/addcontact_topbar"
         android:textStyle="bold"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="25dp"
-        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/chatscreen_til_emailphone"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:hint="Email / Phone Number"
-            app:boxBackgroundColor="@color/intro_login_sheet_bar_color"
-            android:textColorHint="@color/intro_login_sheet_text_color"
-            app:hintTextColor="@color/intro_login_sheet_text_color"
-            app:boxStrokeColor="@color/white"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+            app:cardBackgroundColor="@color/settingtheme_card_bg"
+            app:cardCornerRadius="50dp"
+            android:layout_marginTop="20dp"
+            android:elevation="0dp"
+            app:cardElevation="0dp"
+            app:layout_constraintTop_toBottomOf="@id/addcontact_tv_title"
+            app:layout_constraintStart_toStartOf="@id/addcontact_tv_title"
+            app:layout_constraintEnd_toEndOf="@id/addcontact_tv_title">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/chatscreen_et_emailphone"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:inputType="text"
-                android:textColor="@color/intro_login_sheet_text_color"
+                android:hint="Phone Number"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:textColorHint="@color/del_msg_textcolor"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:textColor="@color/chatscreen_icon_color"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/chatscreen_til_emailphone">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/chatscreen_btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/settingtheme_card_bg"
+            android:elevation="0dp"
+            app:cardElevation="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintTop_toBottomOf="@id/chatscreen_til_emailphone"
+            app:layout_constraintStart_toStartOf="@id/chatscreen_til_emailphone"
+            app:layout_constraintEnd_toEndOf="@id/chatscreen_til_emailphone">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/chatscreen_btn_add"
-                android:layout_width="100dp"
-                android:layout_height="55dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Add"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:cornerRadius="7dp"
                 android:elevation="0dp"
                 app:elevation="0dp"
-                android:backgroundTint="@color/intro_login_sheet_btn_color"
-                android:textColor="@color/white"/>
+                android:textColor="@color/chatscreen_sender_bubble_bg"/>
 
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-
-    </RelativeLayout>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

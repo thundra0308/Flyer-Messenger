@@ -68,4 +68,7 @@
     <color name="ucrop_color_statusbar">#6765c8</color>
     <color name="ucrop_color_widget_active">#6765c8</color>
 
+    <color name="selected_chatroom_bg">#46FF83A6</color>
+    <color name="selected_chat_bg">#41007BFF</color>
+
 </resources>

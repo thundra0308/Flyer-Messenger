@@ -89,9 +89,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
-        android:paddingTop="15dp"
+        android:text="Hii"
+        android:paddingTop="18dp"
         android:paddingEnd="18dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="0dp"
         android:textColor="@color/chatscreen_sender_tc"
         android:textSize="16sp"/>
 
@@ -105,28 +106,28 @@
 
         <TextView
             android:id="@+id/sent_tv_time"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="05:30"
             android:textStyle="bold"
             android:gravity="end|center"
             android:textColor="#FFEBF0"
             android:layout_marginEnd="7dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/sent_iv_tick"
-            android:textSize="12sp"/>
+            android:textSize="11sp"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/sent_iv_tick"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 app:tint="#FFEBF0"
+                app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/sent_tv_time"
                 android:src="@drawable/ic_double_tick"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

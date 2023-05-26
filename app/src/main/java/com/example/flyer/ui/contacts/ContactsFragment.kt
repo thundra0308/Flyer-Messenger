@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flyer.R
 import com.example.flyer.activity.BaseFragments
@@ -71,9 +73,9 @@ class ContactsFragment : BaseFragments() {
             val bottomSheet: BottomSheetDialog = BottomSheetDialog(requireContext(), R.style.bottomSheetStyleaddcontact)
             bottomSheet.setContentView(R.layout.add_contact)
             bottomSheet.show()
-            val btn = bottomSheet.findViewById<MaterialButton>(R.id.chatscreen_btn_add)
+            val btn = bottomSheet.findViewById<CardView>(R.id.chatscreen_btn_add)
             btn?.setOnClickListener {
-                val contact: String = bottomSheet.findViewById<TextInputEditText>(R.id.chatscreen_et_emailphone)?.text.toString()
+                val contact: String = bottomSheet.findViewById<EditText>(R.id.chatscreen_et_emailphone)?.text.toString()
                 createChatRoom(contact)
                 bottomSheet.dismiss()
             }

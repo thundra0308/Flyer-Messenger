@@ -28,5 +28,7 @@ data class ChatRooms(
     var last_msg_del_status: ArrayList<String>? = ArrayList(),
     var last_msg_id: String? = "",
     var sender_local_chat_wallpaper: String? = "",
-    var receiver_local_chat_wallpaper: String? = ""
+    var receiver_local_chat_wallpaper: String? = "",
+    var sender_last_message_number: Long = 0,
+    var receiver_last_message_number: Long = 0
 )

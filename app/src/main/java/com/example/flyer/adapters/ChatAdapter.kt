@@ -1,10 +1,7 @@
 package com.example.flyer.adapters
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Typeface
-import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,24 +9,63 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.flyer.R
 import com.example.flyer.models.Chat
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.HashSet
 
-class ChatAdapter(private val context: Context, private var chatList :List<Chat>, private var image: String, private var receiverName: String, private val delSetSender: HashMap<String,Chat>, private val delSetReceiver: HashMap<String,Chat>, private val recyclerView: RecyclerView): RecyclerView.Adapter<ChatAdapter.MainViewHolder>() {
-    private lateinit var mListener: OnItemLongClickListener
-    private lateinit var click_Listener: OnItemClickListener
-    inner class MainViewHolder(private val itemView: View, private val listener: OnItemLongClickListener): RecyclerView.ViewHolder(itemView) {
+class ChatAdapter(private val context: Context, private var chats :List<Chat>, private var image: String, private var receiverName: String, private val recyclerView: RecyclerView, private val senderId: String): RecyclerView.Adapter<ChatAdapter.MainViewHolder>() {
+    var senderSet = HashSet<Int>()
+    var receiverSet = HashSet<Int>()
+    var liveSenderSet = MutableLiveData<HashSet<Int>>()
+    var liveReceiverSet = MutableLiveData<HashSet<Int>>()
+    var selectionEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    inner class MainViewHolder(private val itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnLongClickListener {
-                listener.onItemLongClick(adapterPosition, itemViewType)
+                if(selectionEnabledLiveData.value==false) {
+                    selectionEnabledLiveData.value = true
+                    if(chats[adapterPosition].from_id==senderId) {
+                        senderSet.add(adapterPosition)
+                        liveSenderSet.value = senderSet
+                    } else {
+                        receiverSet.add(adapterPosition)
+                        liveReceiverSet.value = receiverSet
+                    }
+                    notifyItemChanged(adapterPosition)
+                }
                 true
             }
             itemView.setOnClickListener {
-                click_Listener.onItemClick(adapterPosition, itemViewType)
+                if(selectionEnabledLiveData.value==true) {
+                    if(chats[adapterPosition].from_id==senderId) {
+                        if(senderSet.contains(adapterPosition)) {
+                            senderSet.remove(adapterPosition)
+                        } else {
+                            senderSet.add(adapterPosition)
+                        }
+                        liveSenderSet.value = senderSet
+                    } else {
+                        if(receiverSet.contains(adapterPosition)) {
+                            receiverSet.remove(adapterPosition)
+                        } else {
+                            receiverSet.add(adapterPosition)
+                        }
+                        liveReceiverSet.value = receiverSet
+                    }
+                    if(senderSet.size==0 && receiverSet.size==0) {
+                        senderSet.clear()
+                        receiverSet.clear()
+                        liveSenderSet.value = senderSet
+                        liveReceiverSet.value = receiverSet
+                        selectionEnabledLiveData.value = false
+                    }
+                    notifyItemChanged(adapterPosition)
+                }
             }
         }
         fun bindDataSent(chat: Chat) {
@@ -55,7 +91,7 @@ class ChatAdapter(private val context: Context, private var chatList :List<Chat>
             } else {
                 cvSent.visibility = View.GONE
             }
-            if(delSetSender.contains(chat.id)) {
+            if(senderSet.contains(adapterPosition)) {
                 itemView.findViewById<LinearLayout>(R.id.sent_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_sentforeground)
             } else {
                 itemView.findViewById<LinearLayout>(R.id.sent_ll_reply).foreground = null
@@ -92,7 +128,7 @@ class ChatAdapter(private val context: Context, private var chatList :List<Chat>
             } else {
                 cvSent.visibility = View.GONE
             }
-            if(delSetReceiver.contains(chat.id)) {
+            if(receiverSet.contains(adapterPosition)) {
                 itemView.findViewById<LinearLayout>(R.id.received_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_receiveforeground)
             } else {
                 itemView.findViewById<LinearLayout>(R.id.received_ll_reply).foreground = null
@@ -121,44 +157,48 @@ class ChatAdapter(private val context: Context, private var chatList :List<Chat>
         } else {
             LayoutInflater.from(context).inflate(R.layout.item_container_recived_message, parent, false)
         }
-        return MainViewHolder(view,mListener)
+        return MainViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         if(getItemViewType(position)==VIEW_TYPE_RECEIVER) {
-            holder.bindDataReceive(chatList[position])
+            holder.bindDataReceive(chats[position])
         } else {
-            holder.bindDataSent(chatList[position])
+            holder.bindDataSent(chats[position])
         }
 
     }
 
     override fun getItemCount(): Int {
-        return chatList.size
-    }
-
-    fun setOnLongClickListener(listener: OnItemLongClickListener) {
-        mListener = listener
-    }
-
-    fun setOnClickListener(listener: OnItemClickListener) {
-        click_Listener = listener
-    }
-
-    interface OnItemLongClickListener {
-        fun onItemLongClick(position: Int, viewType: Int)
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int, viewType: Int)
+        return chats.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(FirebaseAuth.getInstance().uid.equals(chatList[position].from_id)) {
+        return if(FirebaseAuth.getInstance().uid.equals(chats[position].from_id)) {
             VIEW_TYPE_SENT
         } else {
             VIEW_TYPE_RECEIVER
         }
+    }
+
+    fun getSelectedItems(): List<Chat> {
+        val selectedList = mutableListOf<Chat>()
+        for (position in senderSet) {
+            if (position in chats.indices) {
+                selectedList.add(chats[position])
+            }
+        }
+        for (position in receiverSet) {
+            if (position in chats.indices) {
+                selectedList.add(chats[position])
+            }
+        }
+        selectionEnabledLiveData.value = false
+        senderSet.clear()
+        receiverSet.clear()
+        liveSenderSet.value = senderSet
+        liveReceiverSet.value = receiverSet
+        return selectedList
     }
 
     private val VIEW_TYPE_SENT: Int = 1

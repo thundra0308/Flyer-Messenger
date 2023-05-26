@@ -1,30 +1,71 @@
 package com.example.flyer.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.flyer.R
+import com.example.flyer.activity.ChatActivity
 import com.example.flyer.models.ChatRooms
+import com.example.flyer.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChatsAdapter(private val context: Context, private val user: List<ChatRooms>): RecyclerView.Adapter<ChatsAdapter.MainViewHolder>() {
-    private lateinit var mListener: onItemClickListener
-    inner class MainViewHolder(private val itemView: View, private val listener: onItemClickListener): RecyclerView.ViewHolder(itemView) {
+class ChatsAdapter(private val context: Context, private val chats: List<ChatRooms>): RecyclerView.Adapter<ChatsAdapter.MainViewHolder>() {
+    private val selectedItems = HashSet<Int>()
+    val selectionEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    inner class MainViewHolder(private val itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
+            itemView.setOnLongClickListener {
+                if(selectionEnabledLiveData.value==false) {
+                    selectionEnabledLiveData.value = true
+                    selectedItems.add(adapterPosition)
+                    notifyItemChanged(adapterPosition)
+                }
+                true
+            }
+
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                if (selectionEnabledLiveData.value==true) {
+                    if (selectedItems.contains(adapterPosition)) {
+                        selectedItems.remove(adapterPosition)
+                        if(selectedItems.size==0) {
+                            selectedItems.clear()
+                            selectionEnabledLiveData.value = false
+                        }
+                    } else {
+                        selectedItems.add(adapterPosition)
+                    }
+                    notifyItemChanged(adapterPosition)
+                } else {
+                    val senderId = chats[adapterPosition].sender_id
+                    val receiverId = chats[adapterPosition].receiver_id
+                    val chatRoomId = chats[adapterPosition].id
+                    val intent = Intent(context, ChatActivity::class.java)
+                    intent.putExtra(Constants.KEY_SENDER_ID,senderId)
+                    intent.putExtra(Constants.KEY_RECEIVER_ID,receiverId)
+                    intent.putExtra(Constants.KEY_CHAT_ROOM_ID,chatRoomId)
+                    startActivity(context,intent,null)
+                }
             }
         }
         fun bindData(receiver: ChatRooms) {
+            if(selectedItems.contains(adapterPosition)) {
+                itemView.findViewById<CardView>(R.id.chatscreen_rvchat_cv_parent).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chatroom_background)
+            } else {
+                itemView.findViewById<CardView>(R.id.chatscreen_rvchat_cv_parent).foreground = null
+            }
             val sender_id: String = FirebaseAuth.getInstance().uid!!
             val profile = itemView.findViewById<CircleImageView>(R.id.chatscreen_rvchat_profileicon)
             val name = itemView.findViewById<TextView>(R.id.chatscreen_rvchat_tv_name)
@@ -94,22 +135,27 @@ class ChatsAdapter(private val context: Context, private val user: List<ChatRoom
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.chatscreen_rv_chats,parent,false)
-        return MainViewHolder(view,mListener)
+        return MainViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bindData(user[position])
+        holder.bindData(chats[position])
     }
 
     override fun getItemCount(): Int {
-        return user.size
+        return chats.size
     }
 
-    fun setOnClickListener(listener: onItemClickListener) {
-        mListener = listener
+    fun getSelectedItems(): List<String> {
+        val selectedList = mutableListOf<String>()
+        for (position in selectedItems) {
+            if (position in chats.indices) {
+                selectedList.add(chats[position].id!!)
+            }
+        }
+        selectionEnabledLiveData.value = false
+        selectedItems.clear()
+        return selectedList
     }
 
-    interface onItemClickListener{
-        fun onItemClick(position: Int)
-    }
 }

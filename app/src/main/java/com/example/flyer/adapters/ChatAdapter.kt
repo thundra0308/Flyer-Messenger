@@ -16,7 +16,9 @@ import com.example.flyer.R
 import com.example.flyer.models.Chat
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
 import java.util.HashSet
+import java.util.Locale
 
 class ChatAdapter(private val context: Context, private var chats :List<Chat>, private var image: String, private var receiverName: String, private val recyclerView: RecyclerView, private val senderId: String): RecyclerView.Adapter<ChatAdapter.MainViewHolder>() {
     var senderSet = HashSet<Int>()
@@ -99,9 +101,12 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
             val text = itemView.findViewById<TextView>(R.id.sent_tv_text)
             val dt = itemView.findViewById<TextView>(R.id.sent_tv_time)
             text.text = chat.text
-            dt.text = chat.datetime
+            val t1 = chat.datetime?.toDate()
+            val t2 = SimpleDateFormat("HH:mm", Locale.getDefault()).format(t1!!)
+            val t3 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(t1)
+            dt.text = "${t2} ${t3}"
             if(chat.del_by?.contains(FirebaseAuth.getInstance().uid)!! || chat.del_for=="Everyone") {
-                text.setTextColor(ContextCompat.getColor(context,R.color.del_msg_textcolor))
+                text.setTextColor(ContextCompat.getColor(context,R.color.sender_del_text_color))
                 text.setTypeface(null,Typeface.ITALIC)
             }
         }
@@ -136,9 +141,12 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
             val text = itemView.findViewById<TextView>(R.id.received_tv_text)
             val dt = itemView.findViewById<TextView>(R.id.received_tv_datetime)
             text.text = chat.text
-            dt.text = chat.datetime
+            val t1 = chat.datetime?.toDate()
+            val t2 = SimpleDateFormat("HH:mm", Locale.getDefault()).format(t1!!)
+            val t3 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(t1)
+            dt.text = "${t2} ${t3}"
             if(chat.del_by?.contains(FirebaseAuth.getInstance().uid)!! || chat.del_for=="Everyone") {
-                text.setTextColor(ContextCompat.getColor(context,R.color.del_msg_textcolor))
+                text.setTextColor(ContextCompat.getColor(context,R.color.receiver_del_text_color))
                 text.setTypeface(null,Typeface.ITALIC)
             }
             val iv = itemView.findViewById<CircleImageView>(R.id.receivec_iv_profile)
@@ -198,6 +206,7 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
         receiverSet.clear()
         liveSenderSet.value = senderSet
         liveReceiverSet.value = receiverSet
+        notifyDataSetChanged()
         return selectedList
     }
 

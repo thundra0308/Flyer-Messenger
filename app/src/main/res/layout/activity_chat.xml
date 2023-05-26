@@ -195,7 +195,7 @@
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:scaleType="fitXY"
-                                android:layout_marginEnd="0dp"
+                                android:layout_marginEnd="3dp"
                                 android:src="@drawable/ic_camera_0"
                                 app:tint="@color/mainscreen_icon_color"
                                 android:layout_marginBottom="8dp"

@@ -29,18 +29,19 @@ import com.example.flyer.utils.Constants
 import com.example.flyer.viewmodelfactory.ChatViewModelFactory
 import com.example.flyer.viewmodels.ChatViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Date
 
 class ChatActivity : BaseActivity() {
 
     private lateinit var binding: ActivityChatBinding
     private lateinit var viewModel: ChatViewModel
-    private lateinit var database: FirebaseFirestore
     private lateinit var chatRoomId: String
     private lateinit var userId: String
     private lateinit var senderId: String
@@ -49,8 +50,6 @@ class ChatActivity : BaseActivity() {
     private lateinit var adapter: ChatAdapter
     private var senderSet = HashSet<Int>()
     private var receiverSet = HashSet<Int>()
-    private var senderDelSet = HashSet<String>()
-    private var receiverDelSet = HashSet<String>()
     private var replyPos: Long = 0
     private lateinit var senderDetails: User
     private lateinit var receiverDetails: User
@@ -262,8 +261,6 @@ class ChatActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendMessage() {
         val text: String = binding.chatsreenEtWritemessage.text.toString().trim()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dt: String = LocalDateTime.now().format(formatter)
         var message_number: Long = 0
         var unread_count: Long = 0
         var replyAttached: Boolean = false
@@ -277,7 +274,7 @@ class ChatActivity : BaseActivity() {
             replyBy = userId
             replyText = binding.replyMsg.text.toString()
         }
-        val chat = Chat("",senderId,text,dt,message_number,"text","Sent", false,"",ArrayList(),replyAttached,replyTo,replyBy,replyPos,replyText)
+        val chat = Chat("",senderId,text, Timestamp(Date()),message_number,"text","Sent", false,"",ArrayList(),replyAttached,replyTo,replyBy,replyPos,replyText)
         viewModel.sendMessage(chat)
     }
 
@@ -353,15 +350,14 @@ class ChatActivity : BaseActivity() {
 
     private fun reply() {
         binding.replyCv.visibility = View.VISIBLE
-        if(senderSet.size==1) {
-            val selectedItems = adapter.getSelectedItems()
+        val selectedItems = adapter.getSelectedItems()
+        if(selectedItems[0].from_id==senderId) {
             binding.replyBar.setBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_sender_color))
             binding.replyName.setTextColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_sender_color))
             binding.replyMsg.text = selectedItems[0]?.text?.toString()
             binding.replyName.text = "You"
             replyPos = selectedItems[0]?.timestamp!!
-        } else if(receiverSet.size==1) {
-            val selectedItems = adapter.getSelectedItems()
+        } else {
             binding.replyBar.setBackgroundColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_receiver_color))
             binding.replyName.setTextColor(ContextCompat.getColor(this@ChatActivity,R.color.reply_receiver_color))
             binding.replyMsg.text = selectedItems[0]?.text
@@ -410,6 +406,14 @@ class ChatActivity : BaseActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this@ChatActivity,message,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        if(senderSet.size+receiverSet.size>0) {
+            adapter.getSelectedItems()
+        } else {
+            super.onBackPressed()
+        }
     }
 
 }

@@ -40,6 +40,8 @@
     <color name="chat_del_tv_bottomsheet">#FFFFFF</color>
     <color name="chat_del_Yes_bottomsheet">#FF3737</color>
     <color name="chat_del_No_bottomsheet">#8BC34A</color>
+    <color name="sender_del_text_color">#FFCDDB</color>
+    <color name="receiver_del_text_color">#B6B4FF</color>
     <color name="reply_sender_color">#FF9FBA</color>
     <color name="reply_receiver_color">#7B79C5</color>
 

@@ -46,7 +46,9 @@ class ChatsFragment : BaseFragments() {
         viewModel = ViewModelProvider(this, ChatsViewModelFactory(senderid,""))[ChatsViewModel::class.java]
         database = FirebaseFirestore.getInstance()
         database.collection(Constants.KEY_COLLECTION_USER).document(senderid).addSnapshotListener { value, error ->
-            sender = value?.toObject(User::class.java)!!
+            if(error==null && value!=null) {
+                sender = value.toObject(User::class.java)!!
+            }
         }
         viewModel.chatLiveData.observe(viewLifecycleOwner) { state ->
             processChatList(state)
@@ -70,6 +72,9 @@ class ChatsFragment : BaseFragments() {
                 viewModel.deleteChatRooms(documents!!)
                 bottomSheet.dismiss()
             }
+        }
+        binding.chatscreenCvOptioncancel.setOnClickListener {
+            adapter?.getSelectedItems()
         }
     }
 
@@ -102,5 +107,7 @@ class ChatsFragment : BaseFragments() {
             }
         }
     }
+
+
 
 }

@@ -68,7 +68,7 @@ class ChatViewModel(private val sender_id: String, private val receiver_id: Stri
                 val chats = mutableListOf<Chat>()
                 for(document in docs1!!) {
                     val chat = document.toObject(Chat::class.java)
-                    if(chat.timestamp>lastMessageNumber) {
+                    if(chat.timestamp>lastMessageNumber && chat.datetime!=null) {
                         if (chat.del_for == "Me") {
                             if (chat.del_by?.contains(sender_id)!!) chat.text =
                                 "This Message has been Deleted."
@@ -121,7 +121,8 @@ class ChatViewModel(private val sender_id: String, private val receiver_id: Stri
             unread_count = room.unread_count + 1
             message_number = room.message_number + 1
             chat.timestamp = message_number
-            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chat_room_id).collection(Constants.KEY_COLLECTION_CHAT).add(chat).addOnSuccessListener {
+            database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chat_room_id).collection(Constants.KEY_COLLECTION_CHAT).add(chat).addOnSuccessListener { doc ->
+                doc.update("datetime",FieldValue.serverTimestamp())
                 database.collection(Constants.KEY_COLLECTION_CHAT_ROOMS).document(chat_room_id).update("last_text",chat.text,"message_number",message_number,"timestamp", FieldValue.serverTimestamp(),"last_text_from",sender_id,"unread_count",unread_count,"last_msg_del_status",ArrayList<String>(),"last_msg_id",it.id)
             }
         }

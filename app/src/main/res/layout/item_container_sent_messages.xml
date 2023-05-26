@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="0dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
     android:id="@+id/cl_sender"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <LinearLayout
         android:id="@+id/sent_ll_reply"

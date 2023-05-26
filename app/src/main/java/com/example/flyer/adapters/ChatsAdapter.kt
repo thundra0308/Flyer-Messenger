@@ -155,6 +155,7 @@ class ChatsAdapter(private val context: Context, private val chats: List<ChatRoo
         }
         selectionEnabledLiveData.value = false
         selectedItems.clear()
+        notifyDataSetChanged()
         return selectedList
     }
 

@@ -14,7 +14,7 @@
         app:cardBackgroundColor="@color/chatactivity_color_bg"
         android:elevation="0dp"
         app:cardElevation="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginTop="11dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -33,8 +33,9 @@
                 android:layout_height="50dp"
                 app:cardBackgroundColor="@color/mainscreen_chat_board_bg"
                 app:cardCornerRadius="10dp"
+                android:layout_marginEnd="5dp"
                 android:elevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/chatscreen_cv_optioncancel"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:cardElevation="0dp">
@@ -65,6 +66,28 @@
                     android:layout_width="19dp"
                     android:layout_height="19dp"
                     android:src="@drawable/ic_bin_0"
+                    app:tint="@color/mainscreen_icon_color"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/chatscreen_cv_optioncancel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardBackgroundColor="@color/mainscreen_chat_board_bg"
+                app:cardCornerRadius="10dp"
+                android:elevation="0dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:cardElevation="0dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_cancel"
                     app:tint="@color/mainscreen_icon_color"
                     android:layout_gravity="center"/>
 

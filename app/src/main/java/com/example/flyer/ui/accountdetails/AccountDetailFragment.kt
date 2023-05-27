@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.bumptech.glide.Glide
 import com.example.flyer.R
 import com.example.flyer.databinding.FragmentAccountDetailBinding
@@ -74,12 +75,14 @@ class AccountDetailFragment : BottomSheetDialogFragment() {
             val bottomSheetDialog = it as BottomSheetDialog
             val bottomSheetInternal = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             BottomSheetBehavior.from(bottomSheetInternal!!).apply {
-                peekHeight = ViewGroup.LayoutParams.MATCH_PARENT
+                peekHeight = 500
                 isHideable = true
+                skipCollapsed = true
                 state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
-
+//        val layout = dialog?.findViewById<CoordinatorLayout>(R.id.accountdetail_cl_parent)
+//        layout?.minimumHeight = resources.displayMetrics.heightPixels
         // Perform any necessary setup or UI customization here
     }
 

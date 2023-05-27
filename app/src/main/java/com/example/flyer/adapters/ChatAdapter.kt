@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -94,9 +95,9 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
                 cvSent.visibility = View.GONE
             }
             if(senderSet.contains(adapterPosition)) {
-                itemView.findViewById<LinearLayout>(R.id.sent_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_sentforeground)
+                itemView.findViewById<ConstraintLayout>(R.id.sent_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_sentforeground)
             } else {
-                itemView.findViewById<LinearLayout>(R.id.sent_ll_reply).foreground = null
+                itemView.findViewById<ConstraintLayout>(R.id.sent_ll_reply).foreground = null
             }
             val text = itemView.findViewById<TextView>(R.id.sent_tv_text)
             val dt = itemView.findViewById<TextView>(R.id.sent_tv_time)
@@ -104,7 +105,7 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
             val t1 = chat.datetime?.toDate()
             val t2 = SimpleDateFormat("HH:mm", Locale.getDefault()).format(t1!!)
             val t3 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(t1)
-            dt.text = "${t2} ${t3}"
+            dt.text = "${t2}"
             if(chat.del_by?.contains(FirebaseAuth.getInstance().uid)!! || chat.del_for=="Everyone") {
                 text.setTextColor(ContextCompat.getColor(context,R.color.sender_del_text_color))
                 text.setTypeface(null,Typeface.ITALIC)
@@ -134,9 +135,9 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
                 cvSent.visibility = View.GONE
             }
             if(receiverSet.contains(adapterPosition)) {
-                itemView.findViewById<LinearLayout>(R.id.received_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_receiveforeground)
+                itemView.findViewById<ConstraintLayout>(R.id.received_ll_reply).foreground = ContextCompat.getDrawable(context,R.drawable.selected_chat_receiveforeground)
             } else {
-                itemView.findViewById<LinearLayout>(R.id.received_ll_reply).foreground = null
+                itemView.findViewById<ConstraintLayout>(R.id.received_ll_reply).foreground = null
             }
             val text = itemView.findViewById<TextView>(R.id.received_tv_text)
             val dt = itemView.findViewById<TextView>(R.id.received_tv_datetime)
@@ -144,7 +145,7 @@ class ChatAdapter(private val context: Context, private var chats :List<Chat>, p
             val t1 = chat.datetime?.toDate()
             val t2 = SimpleDateFormat("HH:mm", Locale.getDefault()).format(t1!!)
             val t3 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(t1)
-            dt.text = "${t2} ${t3}"
+            dt.text = "${t2}"
             if(chat.del_by?.contains(FirebaseAuth.getInstance().uid)!! || chat.del_for=="Everyone") {
                 text.setTextColor(ContextCompat.getColor(context,R.color.receiver_del_text_color))
                 text.setTypeface(null,Typeface.ITALIC)

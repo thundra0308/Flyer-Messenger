@@ -10,7 +10,7 @@
     android:paddingTop="2dp"
     android:paddingBottom="2dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sent_ll_reply"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -32,6 +32,9 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:cardBackgroundColor="@color/chatactivity_color_bg"
             android:elevation="0dp"
             app:cardElevation="0dp">
@@ -89,11 +92,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
-        android:text="Hii"
+        android:text="My Name"
         android:paddingTop="18dp"
-        android:paddingEnd="18dp"
-        android:paddingBottom="0dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="18dp"
+        android:gravity="start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sent_reply_cv"
         android:textColor="@color/chatscreen_sender_tc"
+        app:layout_constraintStart_toStartOf="parent"
         android:textSize="16sp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,8 +108,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3.3dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
-            android:orientation="horizontal">
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/sent_tv_text"
+            app:layout_constraintStart_toEndOf="@id/sent_tv_text">
 
         <TextView
             android:id="@+id/sent_tv_time"
@@ -113,25 +122,23 @@
             android:gravity="end|center"
             android:textColor="#FFEBF0"
             android:layout_marginEnd="7dp"
-            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintEnd_toStartOf="@id/sent_tv_tick"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/sent_iv_tick"
             android:textSize="11sp"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/sent_iv_tick"
+                android:id="@+id/sent_tv_tick"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                app:tint="#FFEBF0"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_double_tick"
+                app:tint="@color/white"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/ic_double_tick"/>
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

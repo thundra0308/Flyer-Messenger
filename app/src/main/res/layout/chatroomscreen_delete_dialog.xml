@@ -7,7 +7,7 @@
 
     <View
         android:id="@+id/chatroomdel_topbar"
-        android:layout_width="27dp"
+        android:layout_width="25dp"
         android:layout_height="2dp"
         android:layout_marginTop="15dp"
         android:backgroundTint="#9B9ACB"
@@ -25,7 +25,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
-        android:textColorHint="@color/del_msg_textcolor"
+        android:textColor="@color/del_msg_textcolor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chatroomdel_topbar"
@@ -39,8 +39,8 @@
         android:text="Messages will only be removed from this device and your devices on the newer versio of Flyer."
         android:textSize="14sp"
         android:gravity="center"
+        android:textColor="@color/del_msg_textcolor"
         android:layout_marginTop="10dp"
-        android:textColorHint="@color/del_msg_textcolor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chatroomdel_tv_confirm"
@@ -49,11 +49,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/chatroom_cv_delno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
         app:cardElevation="0dp"
         android:elevation="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/chatroom_cv_delyes"
@@ -63,8 +63,8 @@
         app:cardCornerRadius="50dp">
 
         <TextView
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:textStyle="bold"
@@ -76,11 +76,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/chatroom_cv_delyes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
         app:cardElevation="0dp"
         android:elevation="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/chatroom_cv_delno"
@@ -90,8 +90,8 @@
         app:cardCornerRadius="50dp">
 
         <TextView
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:textStyle="bold"

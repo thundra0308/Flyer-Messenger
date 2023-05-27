@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.bumptech.glide.Glide
 import com.example.flyer.R
 import com.example.flyer.databinding.FragmentSettingChatWallpaperBinding
@@ -52,7 +53,6 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
         viewModel.wallpaperLiveData.observe(viewLifecycleOwner) { state ->
             if(flag==0) {
                 processWallpaperDetail(state)
-                showToast("Loaded")
             }
         }
         setUpUi()
@@ -106,6 +106,8 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
                 isHideable = true
                 state = BottomSheetBehavior.STATE_EXPANDED
             }
+//            val layout = dialog?.findViewById<CoordinatorLayout>(R.id.settingchatwallpaper_cl_parent)
+//            layout?.minimumHeight = resources.displayMetrics.heightPixels
         }
     }
 
@@ -124,7 +126,6 @@ class SettingChatWallpaperFragment : BottomSheetDialogFragment() {
             Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
             flag = 0
-            Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
     }
 

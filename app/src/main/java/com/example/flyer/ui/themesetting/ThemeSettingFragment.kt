@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.flyer.R
 import com.example.flyer.databinding.FragmentAccountDetailBinding
 import com.example.flyer.databinding.FragmentThemeSettingBinding
@@ -42,6 +43,8 @@ class ThemeSettingFragment : BottomSheetDialogFragment() {
                 isHideable = true
                 state = BottomSheetBehavior.STATE_EXPANDED
             }
+//            val layout = dialog?.findViewById<CoordinatorLayout>(R.id.settingtheme_cl_parent)
+//            layout?.minimumHeight = resources.displayMetrics.heightPixels
         }
     }
 

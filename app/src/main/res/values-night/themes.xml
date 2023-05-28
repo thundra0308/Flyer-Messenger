@@ -59,4 +59,10 @@
     <style name="Modal_accountdetail" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/accountdetail_bottomsheet</item>
     </style>
+    <style name="bottomSheetStyle_attachmentpopup" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Modal_attachmentpopup</item>
+    </style>
+    <style name="Modal_attachmentpopup" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/attachmentbottomsheet_background</item>
+    </style>
 </resources>

@@ -73,4 +73,6 @@
     <color name="selected_chatroom_bg">#46FF83A6</color>
     <color name="selected_chat_bg">#41007BFF</color>
 
+    <color name="attachment_popup_bg">#FFFFFF</color>
+
 </resources>

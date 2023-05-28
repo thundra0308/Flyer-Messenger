@@ -133,6 +133,9 @@ class ChatActivity : BaseActivity() {
         binding.replyCancel.setOnClickListener {
             replyCancel()
         }
+        binding.chatscreenIvPin.setOnClickListener {
+            showAttachmentDialog()
+        }
     }
 
     private fun updateUnreadCount() {
@@ -402,6 +405,12 @@ class ChatActivity : BaseActivity() {
         binding.chatscreenIvDel.visibility = View.VISIBLE
         binding.chatscreenIvForward.visibility = View.VISIBLE
         binding.chatscreenIvVerticaldots.visibility = View.VISIBLE
+    }
+
+    private fun showAttachmentDialog() {
+        val bottomSheet: BottomSheetDialog = BottomSheetDialog(this, R.style.bottomSheetStyle_attachmentpopup)
+        bottomSheet.setContentView(R.layout.attachmentbottomsheet_dialog)
+        bottomSheet.show()
     }
 
     private fun showToast(message: String) {
